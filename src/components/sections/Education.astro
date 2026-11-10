@@ -3,10 +3,7 @@ import GlassCard from '../ui/GlassCard.astro';
 import { education } from '../../data/education';
 ---
 <section id="education" class="wrap section">
-  <header class="intro">
-    <h2>Education</h2>
-    <p>My formal academic timeline, milestones, and technical foundations built throughout my educational path.</p>
-  </header>
+  <h2>Education</h2>
   <div class="timeline">
     {education.map((entry) => (
       <article class="timeline-entry">
@@ -20,6 +17,7 @@ import { education } from '../../data/education';
               {entry.highlights.map((highlight) => <li>{highlight}</li>)}
             </ul>
           </div>
+          <img class="logo" src={entry.logo} alt={entry.logoAlt} loading="lazy" />
         </GlassCard>
       </article>
     ))}
@@ -28,9 +26,7 @@ import { education } from '../../data/education';
 
 <style>
   .section { padding-block: 96px; }
-  .intro { max-width: 760px; margin: 0 auto 40px; text-align: center; }
-  h2 { margin-bottom: 16px; }
-  .intro p { margin: 0; color: var(--slate); font-size: var(--text-lg); }
+  h2 { margin-bottom: 40px; }
   .timeline {
     display: grid;
     gap: 24px;
@@ -51,8 +47,25 @@ import { education } from '../../data/education';
     box-shadow: 0 0 18px rgba(0, 184, 212, 0.4);
     content: "";
   }
-  .timeline-entry :global(.education-card) { padding: 32px; }
-  .content { max-width: 760px; }
+  .timeline-entry :global(.education-card) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 32px;
+  }
+  .content { min-width: 0; flex: 1; }
+  .logo {
+    display: block;
+    width: clamp(88px, 13vw, 144px);
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    border: 1px solid rgba(100, 116, 139, 0.14);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.9);
+    object-fit: contain;
+    padding: 10px;
+  }
   .period {
     display: inline-block;
     margin-bottom: 12px;
@@ -79,6 +92,7 @@ import { education } from '../../data/education';
   @media (max-width: 600px) {
     .timeline { margin-left: 6px; padding-left: 26px; }
     .timeline-entry::before { left: -37px; width: 16px; height: 16px; }
-    .timeline-entry :global(.education-card) { padding: 24px; }
+    .timeline-entry :global(.education-card) { gap: 16px; padding: 24px; }
+    .logo { width: 76px; border-radius: 16px; }
   }
 </style>

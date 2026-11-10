@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+  <title id="title">Education logo placeholder</title>
+  <rect x="4" y="4" width="152" height="152" rx="28" fill="#eef8fa"/>
+  <path d="m28 66 52-28 52 28-52 28z" fill="#00a9c5"/>
+  <path d="M48 82v24c18 15 46 15 64 0V82L80 96z" fill="#087e98"/>
+  <path d="M130 68v30" stroke="#087e98" stroke-linecap="round" stroke-width="6"/>
+  <circle cx="130" cy="104" r="7" fill="#f4b52b"/>
+  <text x="80" y="137" fill="#315166" font-family="Arial,sans-serif" font-size="12" font-weight="700" text-anchor="middle">ADD LOGO</text>
+</svg>
