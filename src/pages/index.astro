@@ -1,12 +1,22 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Button from '../components/ui/Button.astro';
+import Tag from '../components/ui/Tag.astro';
 import { site } from '../data/site';
 ---
 <BaseLayout>
   <main class="wrap" style="padding-block: 120px;">
-    <div class="glass" style="padding: 40px;">
+    <GlassCard strong>
       <h1 style="margin: 0 0 8px;">{site.name}</h1>
-      <p style="margin: 0;">{site.role}</p>
-    </div>
+      <p style="margin: 0 0 20px;">{site.role}</p>
+      <div style="display: flex; gap: 8px; margin-bottom: 24px;">
+        <Tag>React Native</Tag><Tag>Node.js</Tag><Tag>MongoDB</Tag>
+      </div>
+      <div style="display: flex; gap: 12px;">
+        <Button href="#work">See my work</Button>
+        <Button href={site.links.github} variant="ghost">GitHub</Button>
+      </div>
+    </GlassCard>
   </main>
 </BaseLayout>

@@ -1,0 +1,40 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'ghost';
+  class?: string;
+}
+const { href, variant = 'primary', class: className } = Astro.props;
+const external = /^https?:/.test(href);
+---
+<a
+  href={href}
+  class:list={['btn', variant, className]}
+  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+>
+  <slot />
+</a>
+
+<style>
+  .btn {
+    display: inline-block;
+    padding: 14px 26px;
+    border-radius: var(--r-pill);
+    font-weight: 550;
+    transition: transform 0.25s var(--spring);
+  }
+  .btn:hover { transform: scale(1.04); }
+  .btn:active { transform: scale(0.97); }
+
+  .primary {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(0, 113, 227, 0.7);
+  }
+  .ghost {
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+</style>

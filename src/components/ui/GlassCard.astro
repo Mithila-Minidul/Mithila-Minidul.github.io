@@ -1,0 +1,16 @@
+---
+interface Props {
+  as?: 'div' | 'article' | 'section';
+  strong?: boolean;
+  class?: string;
+}
+const { as: Element = 'div', strong = false, class: className } = Astro.props;
+---
+<Element class:list={['glass', 'glass-card', { 'glass-strong': strong }, className]}>
+  <slot />
+</Element>
+
+<style>
+  .glass-card { padding: 32px; }
+  @media (max-width: 760px) { .glass-card { padding: 24px; } }
+</style>
