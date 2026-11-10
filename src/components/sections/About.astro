@@ -4,13 +4,34 @@ import { site } from '../../data/site';
 ---
 <section id="about" class="wrap section">
   <h2>About</h2>
-  <GlassCard strong>
-    {site.about.map((p) => <p>{p}</p>)}
+  <GlassCard strong class="about-card">
+    <img class="profile" src={site.profileImage} alt={`${site.name} profile photo`} loading="lazy" />
+    <div class="copy">
+      {site.about.map((p) => <p>{p}</p>)}
+    </div>
   </GlassCard>
 </section>
 
 <style>
   .section { padding-block: 96px; }
-  .section :global(p) { margin: 0 0 16px; font-size: var(--text-lg); max-width: 56ch; }
-  .section :global(p:last-child) { margin-bottom: 0; }
+  .section :global(.about-card) {
+    display: grid;
+    grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 5vw, 56px);
+  }
+  .profile {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    border: 1px solid rgba(100, 116, 139, 0.14);
+    border-radius: var(--r-lg);
+    object-fit: cover;
+  }
+  .copy :global(p) { margin: 0 0 16px; font-size: var(--text-lg); max-width: 56ch; }
+  .copy :global(p:last-child) { margin-bottom: 0; }
+  @media (max-width: 640px) {
+    .section :global(.about-card) { grid-template-columns: 1fr; }
+    .profile { width: min(100%, 240px); justify-self: center; }
+  }
 </style>

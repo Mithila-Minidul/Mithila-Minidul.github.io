@@ -1,6 +1,7 @@
 export const site = {
   name: 'M.A Mithila Minidul',
   role: 'Software Engineer Undergraduate',
+  profileImage: '/profile.jpg',
   headline: 'Software that feels effortless.',
   intro: 'I design and build fast, reliable products from the interface down to the database.',
   about: [
