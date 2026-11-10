@@ -1,0 +1,43 @@
+---
+import GlassCard from '../ui/GlassCard.astro';
+import { site } from '../../data/site';
+---
+<section id="contributions" class="wrap section">
+  <h2>GitHub Contributions</h2>
+  <GlassCard strong class="contributions-card">
+    <a
+      class="graph-link"
+      href={site.links.github}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="View GitHub profile and contribution activity"
+    >
+      <img
+        src="/github-contributions.svg"
+        alt="GitHub contribution calendar for Mithila-Minidul, generated from the live public GitHub profile during the latest site build"
+        loading="lazy"
+      />
+    </a>
+    <a class="profile-link" href={site.links.github} target="_blank" rel="noreferrer">
+      View contribution activity on GitHub
+      <span aria-hidden="true">↗</span>
+    </a>
+  </GlassCard>
+</section>
+
+<style>
+  .section { padding-block: 96px; }
+  h2 { margin-bottom: 40px; }
+  .section :global(.contributions-card) { padding: clamp(20px, 4vw, 36px); }
+  .graph-link { display: block; overflow-x: auto; }
+  img { display: block; width: 100%; min-width: 680px; height: auto; }
+  .profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    color: var(--blue);
+    font-weight: 600;
+  }
+  .profile-link:hover { text-decoration: underline; }
+</style>

@@ -35,7 +35,7 @@ export const site = {
   url: 'https://MithilaMinidul.github.io',
   email: 'minidulwijesinghe@gmail.com',
   links: {
-    github: 'https://github.com/MithilaMinidul',
+    github: 'https://github.com/Mithila-Minidul',
     linkedin: 'https://linkedin.com/in/YOUR_HANDLE',
   },
   nav: [
@@ -43,6 +43,7 @@ export const site = {
     { label: 'Education', href: '/#education' },
     { label: 'Skills', href: '/#skills' },
     { label: 'Work', href: '/#work' },
+    { label: 'GitHub', href: '/#contributions' },
     { label: 'Contact', href: '/#contact' },
   ],
 } as const;
