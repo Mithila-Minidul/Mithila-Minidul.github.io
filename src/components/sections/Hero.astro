@@ -1,0 +1,42 @@
+---
+import Button from '../ui/Button.astro';
+import { site } from '../../data/site';
+---
+<header class="hero">
+  <div class="scene"><slot name="scene" /></div>
+  <div class="wrap content">
+    <h1>{site.headline}</h1>
+    <p class="lead">{site.intro}</p>
+    <div class="actions">
+      <Button href="#work">See my work</Button>
+      <Button href="#contact" variant="ghost">Get in touch</Button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: center;
+    overflow: clip;
+  }
+  .scene { position: absolute; inset: 0; z-index: 0; }
+  .content { position: relative; z-index: 1; padding-block: 140px 80px; }
+  h1 {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    font-weight: 650;
+    margin: 0 0 24px;
+    max-width: 13ch;
+  }
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--slate);
+    max-width: 46ch;
+    margin: 0 0 36px;
+  }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+</style>

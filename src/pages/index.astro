@@ -1,26 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GlassCard from '../components/ui/GlassCard.astro';
-import Button from '../components/ui/Button.astro';
-import Tag from '../components/ui/Tag.astro';
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
-import { site } from '../data/site';
+import Hero from '../components/sections/Hero.astro';
+import HeroScene from '../components/scene/HeroScene.tsx';
 ---
 <BaseLayout>
   <Navbar />
-  <main class="wrap" style="padding-block: 120px; min-height: 80vh;">
-    <GlassCard strong>
-      <h1 style="margin: 0 0 8px;">{site.name}</h1>
-      <p style="margin: 0 0 20px;">{site.role}</p>
-      <div style="display: flex; gap: 8px; margin-bottom: 24px;">
-        <Tag>React Native</Tag><Tag>Node.js</Tag><Tag>MongoDB</Tag>
-      </div>
-      <div style="display: flex; gap: 12px;">
-        <Button href="#work">See my work</Button>
-        <Button href={site.links.github} variant="ghost">GitHub</Button>
-      </div>
-    </GlassCard>
+  <Hero>
+    <HeroScene slot="scene" client:only="react" />
+  </Hero>
+  <main>
+    <!-- temporary anchors so the nav links scroll; replaced by real sections later -->
+    <section id="work" class="wrap" style="min-height: 60vh; padding-block: 96px;"><h2>Selected work</h2></section>
+    <section id="about" class="wrap" style="min-height: 40vh; padding-block: 96px;"><h2>About</h2></section>
+    <section id="contact" class="wrap" style="min-height: 40vh; padding-block: 96px;"><h2>Contact</h2></section>
   </main>
   <Footer />
 </BaseLayout>
