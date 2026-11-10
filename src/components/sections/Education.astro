@@ -1,0 +1,84 @@
+---
+import GlassCard from '../ui/GlassCard.astro';
+import { education } from '../../data/education';
+---
+<section id="education" class="wrap section">
+  <header class="intro">
+    <h2>Education</h2>
+    <p>My formal academic timeline, milestones, and technical foundations built throughout my educational path.</p>
+  </header>
+  <div class="timeline">
+    {education.map((entry) => (
+      <article class="timeline-entry">
+        <GlassCard as="div" strong class="education-card">
+          <div class="content">
+            <span class="period">{entry.period}</span>
+            <h3>{entry.institution}</h3>
+            <h4>{entry.qualification}</h4>
+            <p class="status">{entry.status}</p>
+            <ul>
+              {entry.highlights.map((highlight) => <li>{highlight}</li>)}
+            </ul>
+          </div>
+        </GlassCard>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section { padding-block: 96px; }
+  .intro { max-width: 760px; margin: 0 auto 40px; text-align: center; }
+  h2 { margin-bottom: 16px; }
+  .intro p { margin: 0; color: var(--slate); font-size: var(--text-lg); }
+  .timeline {
+    display: grid;
+    gap: 24px;
+    margin-left: 12px;
+    padding-left: 40px;
+    border-left: 2px solid rgba(0, 164, 201, 0.6);
+  }
+  .timeline-entry { position: relative; }
+  .timeline-entry::before {
+    position: absolute;
+    top: 28px;
+    left: -51px;
+    width: 18px;
+    height: 18px;
+    border: 3px solid var(--fog);
+    border-radius: 50%;
+    background: #00b8d4;
+    box-shadow: 0 0 18px rgba(0, 184, 212, 0.4);
+    content: "";
+  }
+  .timeline-entry :global(.education-card) { padding: 32px; }
+  .content { max-width: 760px; }
+  .period {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 184, 212, 0.2);
+    border-radius: var(--r-sm);
+    background: rgba(0, 184, 212, 0.08);
+    color: #008ca3;
+    font-size: var(--text-sm);
+    font-weight: 700;
+  }
+  h3 { margin: 0 0 8px; font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.25; }
+  h4 { margin: 0 0 6px; color: #008ca3; font-size: 1.1rem; line-height: 1.4; }
+  .status { margin: 0; color: var(--slate); font-style: italic; font-weight: 600; }
+  ul { display: grid; gap: 8px; margin: 20px 0 0; padding: 0; list-style: none; }
+  li { position: relative; padding-left: 20px; color: var(--slate); }
+  li::before {
+    position: absolute;
+    left: 0;
+    color: #00a9c5;
+    content: "✓";
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    .timeline { margin-left: 6px; padding-left: 26px; }
+    .timeline-entry::before { left: -37px; width: 16px; height: 16px; }
+    .timeline-entry :global(.education-card) { padding: 24px; }
+  }
+</style>

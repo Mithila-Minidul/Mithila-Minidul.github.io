@@ -39,6 +39,7 @@ export const site = {
   },
   nav: [
     { label: 'About', href: '/#about' },
+    { label: 'Education', href: '/#education' },
     { label: 'Skills', href: '/#skills' },
     { label: 'Work', href: '/#work' },
     { label: 'Contact', href: '/#contact' },
