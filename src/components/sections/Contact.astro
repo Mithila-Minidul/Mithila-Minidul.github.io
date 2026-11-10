@@ -1,0 +1,24 @@
+---
+import GlassCard from '../ui/GlassCard.astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../data/site';
+---
+<section id="contact" class="wrap section">
+  <GlassCard strong class="contact">
+    <h2>Let's talk</h2>
+    <p>Open to interesting problems and good conversations.</p>
+    <div class="actions">
+      <Button href={`mailto:${site.email}`}>Email me</Button>
+      <Button href={site.links.github} variant="ghost">GitHub</Button>
+      <Button href={site.links.linkedin} variant="ghost">LinkedIn</Button>
+    </div>
+  </GlassCard>
+</section>
+
+<style>
+  .section { padding-block: 96px; }
+  .section :global(.contact) { text-align: center; padding: 56px 32px; }
+  h2 { margin-bottom: 16px; }
+  p { margin: 0 auto 28px; color: var(--slate); max-width: 44ch; font-size: var(--text-lg); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+</style>

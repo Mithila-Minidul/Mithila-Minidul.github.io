@@ -4,6 +4,8 @@ import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
 import Hero from '../components/sections/Hero.astro';
 import Work from '../components/sections/Work.astro';
+import About from '../components/sections/About.astro';
+import Contact from '../components/sections/Contact.astro';
 import HeroScene from '../components/scene/HeroScene.tsx';
 ---
 <BaseLayout>
@@ -14,8 +16,8 @@ import HeroScene from '../components/scene/HeroScene.tsx';
   <main>
     <!-- temporary anchors so the nav links scroll; replaced by real sections later -->
     <Work />
-    <section id="about" class="wrap" style="min-height: 40vh; padding-block: 96px;"><h2>About</h2></section>
-    <section id="contact" class="wrap" style="min-height: 40vh; padding-block: 96px;"><h2>Contact</h2></section>
+    <About />
+    <Contact />
   </main>
   <Footer />
 </BaseLayout>
