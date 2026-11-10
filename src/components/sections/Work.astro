@@ -1,0 +1,40 @@
+---
+import GlassCard from '../ui/GlassCard.astro';
+import Tag from '../ui/Tag.astro';
+import { projects } from '../../data/projects';
+---
+<section id="work" class="wrap section">
+  <h2>Selected work</h2>
+  <div class="bento">
+    {projects.map((p) => (
+      <GlassCard as="article" strong={p.featured} class={p.featured ? 'card featured' : 'card'}>
+        <h3>{p.title}</h3>
+        <p>{p.summary}</p>
+        <div class="tags">{p.tags.map((t) => <Tag>{t}</Tag>)}</div>
+        {p.caseStudy && <a class="more" href={`/work/${p.slug}`}>Read case study</a>}
+      </GlassCard>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section { padding-block: 96px; }
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .bento :global(.card) {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 260px;
+  }
+  .bento :global(.card.featured) { grid-column: span 4; min-height: 320px; }
+  h3 { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
+  p { margin: 0; color: var(--slate); max-width: 52ch; }
+  .tags { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .more { font-weight: 550; color: var(--blue); }
+  .more:hover { text-decoration: underline; }
+
+  @media (max-width: 760px) {
+    .bento :global(.card), .bento :global(.card.featured) { grid-column: span 6; min-height: 0; }
+  }
+</style>
