@@ -3,10 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
 import Button from '../components/ui/Button.astro';
 import Tag from '../components/ui/Tag.astro';
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
 import { site } from '../data/site';
 ---
 <BaseLayout>
-  <main class="wrap" style="padding-block: 120px;">
+  <Navbar />
+  <main class="wrap" style="padding-block: 120px; min-height: 80vh;">
     <GlassCard strong>
       <h1 style="margin: 0 0 8px;">{site.name}</h1>
       <p style="margin: 0 0 20px;">{site.role}</p>
@@ -19,4 +22,5 @@ import { site } from '../data/site';
       </div>
     </GlassCard>
   </main>
+  <Footer />
 </BaseLayout>

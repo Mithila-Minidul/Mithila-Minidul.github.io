@@ -1,0 +1,31 @@
+---
+import { site } from '../../data/site';
+---
+<nav class="glass navbar" aria-label="Primary">
+  {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+</nav>
+
+<style>
+  .navbar {
+    position: fixed;
+    z-index: 10;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    border-radius: var(--r-pill);
+    background: var(--glass-strong);
+  }
+  a {
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    font-size: 0.95rem;
+    color: var(--slate);
+    transition: background 0.2s, color 0.2s;
+  }
+  a:hover { background: rgba(255, 255, 255, 0.8); color: var(--ink); }
+
+  @media (max-width: 480px) { a { padding: 8px 12px; } }
+</style>

@@ -1,0 +1,26 @@
+---
+import { site } from '../../data/site';
+---
+<footer class="wrap footer">
+  <p>© {new Date().getFullYear()} {site.name}</p>
+  <p class="links">
+    <a href={site.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href={`mailto:${site.email}`}>Email</a>
+  </p>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 40px 56px;
+    color: var(--slate);
+    font-size: var(--text-sm);
+  }
+  p { margin: 0; }
+  .links { display: flex; gap: 20px; }
+  .links a:hover { color: var(--ink); }
+</style>
