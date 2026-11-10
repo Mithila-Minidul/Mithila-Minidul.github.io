@@ -5,8 +5,8 @@ import { education } from '../../data/education';
 <section id="education" class="wrap section">
   <h2>Education</h2>
   <div class="timeline">
-    {education.map((entry) => (
-      <article class="timeline-entry">
+    {education.map((entry, index) => (
+      <article class="timeline-entry" style={`--reveal-order: ${index}`}>
         <GlassCard as="div" strong class="education-card">
           <div class="content">
             <span class="period">{entry.period}</span>
@@ -47,6 +47,27 @@ import { education } from '../../data/education';
     box-shadow: 0 0 18px rgba(0, 184, 212, 0.4);
     content: "";
   }
+  .reveal-ready .timeline-entry {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(22px);
+    transition:
+      opacity 900ms ease,
+      filter 900ms ease,
+      transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    transition-delay: calc(var(--reveal-order) * 140ms);
+  }
+  .reveal-ready .timeline-entry.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+  .reveal-ready .timeline-entry::before {
+    scale: 0.65;
+    transition: scale 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
+    transition-delay: calc(var(--reveal-order) * 140ms + 140ms);
+  }
+  .reveal-ready .timeline-entry.is-visible::before { scale: 1; }
   .timeline-entry :global(.education-card) {
     display: flex;
     align-items: center;
@@ -95,4 +116,39 @@ import { education } from '../../data/education';
     .timeline-entry :global(.education-card) { gap: 16px; padding: 24px; }
     .logo { width: 76px; border-radius: 16px; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready .timeline-entry {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
+    .reveal-ready .timeline-entry::before { scale: 1; transition: none; }
+  }
 </style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('#education');
+  const entries = section?.querySelectorAll<HTMLElement>('.timeline-entry');
+
+  if (
+    section &&
+    entries?.length &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    const observer = new IntersectionObserver(
+      (observations) => {
+        for (const observation of observations) {
+          if (!observation.isIntersecting) continue;
+          observation.target.classList.add('is-visible');
+          observer.unobserve(observation.target);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    section.classList.add('reveal-ready');
+    entries.forEach((entry) => observer.observe(entry));
+  }
+</script>
