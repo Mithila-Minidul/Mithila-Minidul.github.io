@@ -28,6 +28,25 @@ import { projects } from '../../data/projects';
     min-height: 260px;
   }
   .bento :global(.card.featured) { grid-column: span 4; min-height: 320px; }
+  .bento :global(.card)::before {
+    inset: -1px;
+    padding: 2px;
+    background:
+      radial-gradient(
+        320px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(0, 113, 227, 1),
+        rgba(0, 184, 212, 0.82) 30%,
+        rgba(0, 113, 227, 0.32) 56%,
+        transparent 76%
+      ),
+      linear-gradient(135deg, var(--glass-edge), rgba(255, 255, 255, 0.12) 40%, rgba(255, 255, 255, 0.55));
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+  .bento :global(.card:hover)::before {
+    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(0, 153, 255, 0.62));
+  }
   h3 { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
   p { margin: 0; color: var(--slate); max-width: 52ch; }
   .tags { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -37,4 +56,24 @@ import { projects } from '../../data/projects';
   @media (max-width: 760px) {
     .bento :global(.card), .bento :global(.card.featured) { grid-column: span 6; min-height: 0; }
   }
+  @media (hover: none) {
+    .bento :global(.card:hover)::before { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bento :global(.card)::before { transition: none; }
+  }
 </style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('#work .bento .card');
+
+  for (const card of cards) {
+    card.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return;
+
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
+      card.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+    });
+  }
+</script>
