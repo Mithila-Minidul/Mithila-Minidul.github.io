@@ -12,8 +12,8 @@ export const projects: Project[] = [
     slug: 'boardmate',
     title: 'BoardMate',
     summary:
-      'A mobile app that helps people in Sri Lanka find boarding houses. Built end to end: the app, the API and the database.',
-    tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB'],
+      'A full-stack mobile marketplace connecting people looking for housing with boarding owners, through interactive location-based discovery.',
+    tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
     featured: true,
     caseStudy: true,
   },

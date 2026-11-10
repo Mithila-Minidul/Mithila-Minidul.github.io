@@ -12,8 +12,8 @@ export const site = {
     linkedin: 'https://linkedin.com/in/YOUR_HANDLE',
   },
   nav: [
-    { label: 'Work', href: '#work' },
-    { label: 'About', href: '#about' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Work', href: '/#work' },
+    { label: 'About', href: '/#about' },
+    { label: 'Contact', href: '/#contact' },
   ],
 } as const;
