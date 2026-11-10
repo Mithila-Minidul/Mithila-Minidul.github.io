@@ -1,0 +1,95 @@
+---
+import {
+  siApachetomcat,
+  siAstro,
+  siCloudinary,
+  siCss,
+  siExpress,
+  siExpo,
+  siGit,
+  siGithub,
+  siHono,
+  siHtml5,
+  siJavascript,
+  siMongodb,
+  siMysql,
+  siNetlify,
+  siNodedotjs,
+  siPostman,
+  siRailway,
+  siReact,
+  siRender,
+  siSocketdotio,
+  siSpringboot,
+  siTailwindcss,
+  siTypescript,
+  siVercel,
+} from 'simple-icons';
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+const icons: Record<string, { path: string; hex: string }> = {
+  Astro: siAstro,
+  Tomcat: siApachetomcat,
+  'Cloudinary': siCloudinary,
+  'CSS3': siCss,
+  'Express.js': siExpress,
+  Expo: siExpo,
+  Git: siGit,
+  GitHub: siGithub,
+  Hono: siHono,
+  HTML5: siHtml5,
+  JavaScript: siJavascript,
+  MongoDB: siMongodb,
+  MySQL: siMysql,
+  Netlify: siNetlify,
+  'Node.js': siNodedotjs,
+  Postman: siPostman,
+  Railway: siRailway,
+  React: siReact,
+  'React Native': siReact,
+  Render: siRender,
+  'Socket.io': siSocketdotio,
+  'Spring Boot': siSpringboot,
+  'Tailwind CSS': siTailwindcss,
+  TypeScript: siTypescript,
+  Vercel: siVercel,
+};
+const icon = icons[name];
+const fallbackColors: Record<string, string> = {
+  Java: '#e76f00',
+  'Microsoft SQL Server': '#cc2927',
+};
+const fallbackColor = fallbackColors[name] ?? '#64748b';
+const monogram = name === 'Microsoft SQL Server' ? 'SQL' : name.slice(0, 2);
+---
+<span class="skill-icon" style={`--icon-color: #${icon?.hex ?? fallbackColor.replace('#', '')}`}>
+  {icon ? (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d={icon.path} />
+    </svg>
+  ) : (
+    <span class="monogram">{monogram}</span>
+  )}
+</span>
+
+<style>
+  .skill-icon {
+    display: inline-grid;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    place-items: center;
+    color: var(--icon-color);
+  }
+  svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+  .monogram {
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+  }
+</style>

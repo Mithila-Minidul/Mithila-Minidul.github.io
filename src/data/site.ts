@@ -7,10 +7,27 @@ export const site = {
     'I am a software engineering undergraduate who enjoys building complete products, from the mobile interface to the API and the database.',
     'My main project is BoardMate, a location-aware boarding house marketplace for Sri Lanka. I work across React Native, Expo, Node.js, Express and MongoDB.',
   ],
-  skills: [
-    { group: 'Mobile and frontend', items: ['React Native', 'Expo', 'Tailwind CSS'] },
-    { group: 'Backend', items: ['Node.js', 'Express', 'Socket.io'] },
-    { group: 'Data and services', items: ['MongoDB', 'Cloudinary'] },
+  technicalSkills: [
+    {
+      group: 'Frontend Development',
+      description: 'Building responsive, modern, and interactive user interfaces.',
+      items: ['HTML5', 'CSS3', 'JavaScript', 'TypeScript', 'React', 'React Native', 'Expo', 'Tailwind CSS', 'Astro'],
+    },
+    {
+      group: 'Backend Architecture',
+      description: 'Developing robust, secure, and scalable server-side systems.',
+      items: ['Java', 'Spring Boot', 'Tomcat', 'Node.js', 'Express.js', 'Hono', 'Socket.io'],
+    },
+    {
+      group: 'Database & Core Tools',
+      description: 'Managing structured data, collaboration, and development workflows.',
+      items: ['MySQL', 'Microsoft SQL Server', 'MongoDB', 'Git', 'GitHub', 'Postman'],
+    },
+    {
+      group: 'Cloud & Deployments',
+      description: 'Configuring hosting and deploying applications for production.',
+      items: ['Vercel', 'Render', 'Railway', 'Netlify', 'Cloudinary'],
+    },
   ],
   title: 'Mithila Minidul | Portfolio',
   description: 'Hi!. Iam Software engineer undergraduate at SLIIT. I am passinate to build mobile apps and webs and building fast, reliable products across mobile, web and backend.',
@@ -21,8 +38,9 @@ export const site = {
     linkedin: 'https://linkedin.com/in/YOUR_HANDLE',
   },
   nav: [
-    { label: 'Work', href: '/#work' },
     { label: 'About', href: '/#about' },
+    { label: 'Skills', href: '/#skills' },
+    { label: 'Work', href: '/#work' },
     { label: 'Contact', href: '/#contact' },
   ],
 } as const;

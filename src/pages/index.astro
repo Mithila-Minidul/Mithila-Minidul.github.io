@@ -5,6 +5,7 @@ import Footer from '../components/layout/Footer.astro';
 import Hero from '../components/sections/Hero.astro';
 import Work from '../components/sections/Work.astro';
 import About from '../components/sections/About.astro';
+import TechnicalSkills from '../components/sections/TechnicalSkills.astro';
 import Contact from '../components/sections/Contact.astro';
 import HeroScene from '../components/scene/HeroScene.tsx';
 ---
@@ -14,9 +15,9 @@ import HeroScene from '../components/scene/HeroScene.tsx';
     <HeroScene slot="scene" client:only="react" />
   </Hero>
   <main>
-    <!-- temporary anchors so the nav links scroll; replaced by real sections later -->
-    <Work />
     <About />
+    <TechnicalSkills />
+    <Work />
     <Contact />
   </main>
   <Footer />

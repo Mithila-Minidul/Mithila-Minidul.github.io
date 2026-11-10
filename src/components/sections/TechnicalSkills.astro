@@ -1,0 +1,42 @@
+---
+import GlassCard from '../ui/GlassCard.astro';
+import SkillIcon from '../ui/SkillIcon.astro';
+import Tag from '../ui/Tag.astro';
+import { site } from '../../data/site';
+---
+<section id="skills" class="wrap section">
+  <h2>Technical Skills</h2>
+  <div class="groups">
+    {site.technicalSkills.map((group) => (
+      <GlassCard strong>
+        <h3>{group.group}</h3>
+        <p>{group.description}</p>
+        <div class="tags">
+          {group.items.map((item) => (
+            <Tag>
+              <SkillIcon name={item} />
+              {item}
+            </Tag>
+          ))}
+        </div>
+      </GlassCard>
+    ))}
+  </div>
+</section>
+
+<style>
+  .section { padding-block: 96px; }
+  .groups { display: grid; gap: 20px; }
+  h3 { margin: 0 0 8px; font-size: 1.35rem; letter-spacing: -0.02em; }
+  p { margin: 0 0 20px; color: var(--slate); }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+  .tags :global(.tag) {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid rgba(100, 116, 139, 0.12);
+    background: rgba(255, 255, 255, 0.48);
+    font-weight: 550;
+  }
+</style>
