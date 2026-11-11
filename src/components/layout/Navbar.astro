@@ -153,14 +153,10 @@ import { site } from '../../data/site';
 
   if (nav && indicator && links.length) {
     let activeLink: HTMLAnchorElement | undefined;
+    let pendingLink: HTMLAnchorElement | undefined;
+    let settleTimer = 0;
 
-    const setActiveLink = (link?: HTMLAnchorElement) => {
-      activeLink = link;
-      for (const candidate of links) {
-        if (candidate === link) candidate.setAttribute('aria-current', 'location');
-        else candidate.removeAttribute('aria-current');
-      }
-
+    const positionIndicator = (link?: HTMLAnchorElement) => {
       if (!link) {
         indicator.classList.remove('is-visible');
         return;
@@ -172,14 +168,61 @@ import { site } from '../../data/site';
       indicator.classList.add('is-visible');
     };
 
+    const setActiveLink = (link?: HTMLAnchorElement, reposition = false) => {
+      if (link === activeLink && !reposition) return;
+
+      activeLink = link;
+      for (const candidate of links) {
+        if (candidate === link) candidate.setAttribute('aria-current', 'location');
+        else candidate.removeAttribute('aria-current');
+      }
+
+      positionIndicator(link);
+    };
+
     const hashLink = links.find((link) => link.hash === window.location.hash);
     if (hashLink) setActiveLink(hashLink);
+
+    const updateActiveFromScroll = () => {
+      scrollFrame = 0;
+      if (pendingLink) {
+        setActiveLink(pendingLink);
+        return;
+      }
+
+      const focusLine = Math.min(window.innerHeight * 0.38, 260);
+      const current = destinations
+        .filter(({ section }) => {
+          const bounds = section.getBoundingClientRect();
+          return bounds.top <= focusLine && bounds.bottom > focusLine;
+        })
+        .at(-1);
+
+      if (current) setActiveLink(current.link);
+      else if (window.scrollY < window.innerHeight * 0.6) {
+        setActiveLink(links.find((link) => link.hash === window.location.hash));
+      } else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+        setActiveLink(destinations.at(-1)?.link);
+      }
+    };
+
+    const settlePendingLink = () => {
+      if (!pendingLink) return;
+      pendingLink = undefined;
+      window.clearTimeout(settleTimer);
+      updateActiveFromScroll();
+    };
 
     nav.addEventListener('click', (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
       const link = target.closest<HTMLAnchorElement>('[data-nav-link]');
-      if (link) setActiveLink(link);
+      if (!link) return;
+
+      pendingLink = link;
+      setActiveLink(link);
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settlePendingLink, 220);
     });
 
     nav.addEventListener('pointermove', (event) => {
@@ -190,33 +233,21 @@ import { site } from '../../data/site';
     });
 
     let scrollFrame = 0;
-    const updateActiveFromScroll = () => {
-      scrollFrame = 0;
-      const focusLine = Math.min(window.innerHeight * 0.38, 260);
-      const current = destinations
-        .filter(({ section }) => {
-          const bounds = section.getBoundingClientRect();
-          return bounds.top <= focusLine && bounds.bottom > focusLine;
-        })
-        .at(-1);
-
-      if (current) setActiveLink(current.link);
-      else if (window.scrollY < window.innerHeight * 0.6) setActiveLink(hashLink);
-      else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
-        setActiveLink(destinations.at(-1)?.link);
-      }
-    };
-
     window.addEventListener(
       'scroll',
       () => {
+        if (pendingLink) {
+          window.clearTimeout(settleTimer);
+          settleTimer = window.setTimeout(settlePendingLink, 220);
+        }
         if (scrollFrame) return;
         scrollFrame = window.requestAnimationFrame(updateActiveFromScroll);
       },
       { passive: true },
     );
+    window.addEventListener('scrollend', settlePendingLink);
     window.addEventListener('resize', () => {
-      if (activeLink) setActiveLink(activeLink);
+      if (activeLink) setActiveLink(activeLink, true);
     });
   }
 </script>
