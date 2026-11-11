@@ -2,6 +2,7 @@
 import GlassCard from '../ui/GlassCard.astro';
 import Button from '../ui/Button.astro';
 import { site } from '../../data/site';
+import { siGithub } from 'simple-icons';
 ---
 <section id="contact" class="wrap section">
   <GlassCard strong class="contact">
@@ -10,9 +11,28 @@ import { site } from '../../data/site';
       I’m currently pursuing my software engineering degree and actively seeking an internship where I can contribute to real products and grow with a great team. I’m also open to freelance work and collaborative software projects. If you have an opportunity in mind, let’s connect.
     </p>
     <div class="actions contact-actions">
-      <Button href={`mailto:${site.email}`} class="contact-email">Email me</Button>
-      <Button href={site.links.github} variant="ghost" class="contact-github">GitHub</Button>
-      <Button href={site.links.linkedin} variant="ghost" class="contact-linkedin">LinkedIn</Button>
+      <Button href={`mailto:${site.email}`} class="contact-email">
+        <span class="button-content">
+          <svg class="contact-icon email-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3.75 5.25h16.5A1.75 1.75 0 0 1 22 7v10a1.75 1.75 0 0 1-1.75 1.75H3.75A1.75 1.75 0 0 1 2 17V7a1.75 1.75 0 0 1 1.75-1.75Zm.2 2.1 7.53 5.65a.88.88 0 0 0 1.04 0l7.53-5.65H3.95Zm16.3 1.88-6.53 4.9a2.88 2.88 0 0 1-3.44 0l-6.53-4.9V17c0 .14.11.25.25.25h16a.25.25 0 0 0 .25-.25V9.23Z" />
+          </svg>
+          <span>Email me</span>
+        </span>
+      </Button>
+      <Button href={site.links.github} variant="ghost" class="contact-github">
+        <span class="button-content">
+          <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true"><path d={siGithub.path} /></svg>
+          <span>GitHub</span>
+        </span>
+      </Button>
+      <Button href={site.links.linkedin} variant="ghost" class="contact-linkedin">
+        <span class="button-content">
+          <svg class="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 9h3.56v11.45H3.56V9Zm18.66-9H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+          </svg>
+          <span>LinkedIn</span>
+        </span>
+      </Button>
     </div>
   </GlassCard>
 </section>
@@ -105,6 +125,19 @@ import { site } from '../../data/site';
   }
   .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
+  .section :global(.contact-actions .btn > span) {
+    display: inline-flex;
+    align-items: center;
+  }
+  .section :global(.contact-actions .button-content) { gap: 9px; }
+  .section :global(.contact-icon) {
+    display: block;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 17px;
+    fill: currentColor;
+  }
+
   .section :global(.contact-actions .contact-email),
   .section :global(.contact-actions .contact-github),
   .section :global(.contact-actions .contact-linkedin) {
@@ -154,6 +187,14 @@ import { site } from '../../data/site';
   .section :global(.contact-actions:has(.contact-linkedin:focus-visible) .contact-linkedin)::before {
     transform: scaleX(1);
     transition-delay: 300ms;
+  }
+  .section :global(.contact-actions[data-previous-social="linkedin"]:has(.contact-github:hover) .contact-github)::before,
+  .section :global(.contact-actions[data-previous-social="linkedin"]:has(.contact-github:focus-visible) .contact-github)::before {
+    transform-origin: right center;
+  }
+  .section :global(.contact-actions[data-previous-social="github"]:has(.contact-linkedin:hover) .contact-github)::before,
+  .section :global(.contact-actions[data-previous-social="github"]:has(.contact-linkedin:focus-visible) .contact-github)::before {
+    transform-origin: right center;
   }
   .section :global(.contact-actions:has(.contact-github:hover) .contact-email)::before,
   .section :global(.contact-actions:has(.contact-github:focus-visible) .contact-email)::before,
@@ -231,6 +272,7 @@ import { site } from '../../data/site';
 
 <script>
   const contactCard = document.querySelector<HTMLElement>('#contact .contact');
+  const contactActions = document.querySelector<HTMLElement>('#contact .contact-actions');
 
   if (contactCard) {
     const proximity = 110;
@@ -257,6 +299,43 @@ import { site } from '../../data/site';
 
     window.addEventListener('blur', () => {
       delete contactCard.dataset.near;
+    });
+  }
+
+  if (contactActions) {
+    let lastSocialButton: 'github' | 'linkedin' | undefined;
+    let resetPreviousSocial: number | undefined;
+
+    const trackSocialButton = (event: Event) => {
+      if (!(event.target instanceof Element)) return;
+      const button = event.target.closest<HTMLElement>('.contact-github, .contact-linkedin, .contact-email');
+      if (!button) return;
+
+      if (resetPreviousSocial !== undefined) {
+        window.clearTimeout(resetPreviousSocial);
+        resetPreviousSocial = undefined;
+      }
+
+      if (button.classList.contains('contact-github') || button.classList.contains('contact-linkedin')) {
+        const nextSocialButton = button.classList.contains('contact-github') ? 'github' : 'linkedin';
+        if (nextSocialButton !== lastSocialButton) {
+          contactActions.dataset.previousSocial = lastSocialButton ?? '';
+          lastSocialButton = nextSocialButton;
+        }
+      } else {
+        lastSocialButton = undefined;
+        contactActions.dataset.previousSocial = '';
+      }
+    };
+
+    contactActions.addEventListener('pointerover', trackSocialButton);
+    contactActions.addEventListener('focusin', trackSocialButton);
+    contactActions.addEventListener('pointerleave', () => {
+      resetPreviousSocial = window.setTimeout(() => {
+        lastSocialButton = undefined;
+        contactActions.dataset.previousSocial = '';
+        resetPreviousSocial = undefined;
+      }, 1500);
     });
   }
 </script>
