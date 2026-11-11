@@ -67,13 +67,31 @@ import { quickActions } from '../../data/quick-actions';
     box-shadow: 0 12px 32px -24px rgba(34, 52, 86, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.78);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
     backdrop-filter: blur(24px) saturate(160%);
-    transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+    transition:
+      transform 120ms ease-out,
+      background 120ms ease-out,
+      box-shadow 120ms ease-out,
+      border-color 120ms ease-out;
   }
-  a.shortcut:hover {
-    transform: translateY(-2px);
+  a.shortcut:hover,
+  a.shortcut:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(0, 113, 227, 0.42);
     background: rgba(255, 255, 255, 0.76);
-    box-shadow: 0 16px 36px -24px rgba(34, 52, 86, 0.48), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 0 0 3px rgba(0, 113, 227, 0.1),
+      0 14px 34px -18px rgba(0, 113, 227, 0.34),
+      0 16px 36px -24px rgba(34, 52, 86, 0.48),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
   }
+  a.shortcut:active { transform: translateY(-1px) scale(0.99); }
+  a.shortcut:hover .icon,
+  a.shortcut:focus-visible .icon {
+    border-color: rgba(0, 113, 227, 0.3);
+    background: rgba(0, 113, 227, 0.14);
+  }
+  a.shortcut:hover .arrow,
+  a.shortcut:focus-visible .arrow { color: var(--blue); }
   .icon {
     display: grid;
     width: 42px;
