@@ -40,6 +40,9 @@ import { site } from '../../data/site';
       0 0 30px -12px rgba(0, 184, 212, 0.22);
     transition: box-shadow 320ms ease;
   }
+  .section :global(.contact)::after {
+    display: none;
+  }
   .section :global(.contact)::before {
     inset: -1px;
     padding: 2px;
@@ -81,12 +84,32 @@ import { site } from '../../data/site';
     animation: contact-glow-rotation 5s linear infinite;
   }
   h2 { margin-bottom: 16px; }
-  p { margin: 0 auto 28px; color: var(--slate); max-width: 44ch; font-size: var(--text-lg); }
+  p {
+    margin: 0 auto 28px;
+    color: transparent;
+    max-width: 44ch;
+    font-size: var(--text-lg);
+    background-image:
+      radial-gradient(
+        circle 135px at var(--contact-copy-x, -100px) var(--contact-copy-y, -100px),
+        rgba(205, 137, 0, var(--contact-copy-glow, 0)) 0% 38%,
+        rgba(205, 137, 0, 0) 100%
+      ),
+      linear-gradient(var(--slate), var(--slate));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .section :global(.contact[data-near="true"]) p {
+    --contact-copy-glow: 1;
+  }
   .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
   @media (prefers-reduced-motion: reduce) {
     .section :global(.contact),
-    .section :global(.contact)::before {
+    .section :global(.contact)::before,
+    h2,
+    p {
       transition: none;
       animation: none;
     }
@@ -114,8 +137,12 @@ import { site } from '../../data/site';
 
       contactCard.dataset.near = String(isNear);
       if (isNear) {
-        contactCard.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
-        contactCard.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+        const description = contactCard.querySelector<HTMLElement>('p');
+        if (description) {
+          const descriptionBounds = description.getBoundingClientRect();
+          description.style.setProperty('--contact-copy-x', `${event.clientX - descriptionBounds.left}px`);
+          description.style.setProperty('--contact-copy-y', `${event.clientY - descriptionBounds.top}px`);
+        }
       }
     });
 
