@@ -5,7 +5,9 @@ import { site } from '../../data/site';
 <section id="about" class="wrap section">
   <h2>About</h2>
   <GlassCard strong class="about-card">
-    <img class="profile" src={site.profileImage} alt={`${site.name} profile photo`} loading="lazy" />
+    <div class="profile-frame">
+      <img class="profile" src={site.profileImage} alt={`${site.name} profile photo`} loading="lazy" />
+    </div>
     <div class="copy">
       {site.about.map((p) => <p>{p}</p>)}
     </div>
@@ -20,18 +22,86 @@ import { site } from '../../data/site';
     align-items: center;
     gap: clamp(24px, 5vw, 56px);
   }
+  .profile-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 7px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    border-radius: 34px;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.22) 50%, rgba(163, 183, 214, 0.3)),
+      rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 18px 42px -26px rgba(34, 48, 75, 0.5),
+      0 3px 10px rgba(50, 64, 90, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.38);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    isolation: isolate;
+  }
+  .profile-frame::before,
+  .profile-frame::after {
+    position: absolute;
+    z-index: 1;
+    border-radius: inherit;
+    content: "";
+    pointer-events: none;
+  }
+  .profile-frame::before {
+    inset: 0;
+    padding: 1px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.12) 48%, rgba(130, 154, 190, 0.42));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  }
+  .profile-frame::after {
+    inset: 7px;
+    border-radius: 27px;
+    background:
+      radial-gradient(210px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, 0.42), transparent 72%),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.2), transparent 45%);
+    opacity: 0.48;
+    transition: opacity 240ms ease;
+  }
+  .profile-frame:hover::after { opacity: 0.9; }
   .profile {
     display: block;
     width: 100%;
-    aspect-ratio: 1;
-    border: 1px solid rgba(100, 116, 139, 0.14);
-    border-radius: var(--r-lg);
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 27px;
     object-fit: cover;
   }
   .copy :global(p) { margin: 0 0 16px; font-size: var(--text-lg); max-width: 56ch; }
   .copy :global(p:last-child) { margin-bottom: 0; }
   @media (max-width: 640px) {
     .section :global(.about-card) { grid-template-columns: 1fr; }
-    .profile { width: min(100%, 240px); justify-self: center; }
+    .profile-frame { width: min(100%, 240px); justify-self: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .profile-frame::after { transition: none; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .profile-frame {
+      border-color: rgba(200, 205, 215, 0.9);
+      background: #fff;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
 </style>
+
+<script>
+  const frame = document.querySelector<HTMLElement>('#about .profile-frame');
+
+  frame?.addEventListener('pointermove', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    const bounds = frame.getBoundingClientRect();
+    frame.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
+    frame.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+  });
+</script>
