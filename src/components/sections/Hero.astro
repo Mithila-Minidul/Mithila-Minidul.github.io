@@ -17,12 +17,16 @@ import { site } from '../../data/site';
 <style>
   .hero {
     position: relative;
-    min-height: 100svh;
     display: grid;
     align-items: center;
-    overflow: clip;
   }
-  .scene { position: absolute; inset: 0; z-index: 0; }
+  .scene {
+    position: absolute;
+    z-index: 0;
+    inset: 0 0 -180px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+  }
   .content { position: relative; z-index: 1; padding-block: 140px 80px; }
   h1 {
     font-size: var(--text-h1);

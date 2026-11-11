@@ -15,7 +15,11 @@ import { site } from '../../data/site';
 </section>
 
 <style>
-  .section { padding-block: 96px; }
+  .section {
+    position: relative;
+    z-index: 1;
+    padding-block: 32px 96px;
+  }
   .section :global(.about-card) {
     display: grid;
     grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
