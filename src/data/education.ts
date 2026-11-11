@@ -22,21 +22,26 @@ export const education: EducationEntry[] = [
     ],
   },
   {
-    institution: 'Education entry two',
+    institution: 'MR/Rahula College',
     logo: '/education/rahula.png',
     logoAlt: 'Rahula College emblem',
-    period: 'Add dates',
-    qualification: 'Add your qualification or area of study',
-    status: 'Add your status',
-    highlights: ['Add a key achievement or detail.'],
+    period: 'Mar 2021 - Jan 2024',
+    qualification: 'G.C.E. Advanced Level (Physical Science Stream)',
+    status: '',
+    highlights: [
+      'Developed core mathematical, problem-solving, and analytical foundations critical for computer science.',
+      'Graduated with verified high academic standing.'
+    ],
   },
   {
-    institution: 'Education entry three',
+    institution: 'MR/Kongala Central College',
     logo: '/education/kongala.jpg',
     logoAlt: 'Kongala Central College emblem',
-    period: 'Add dates',
-    qualification: 'Add your qualification or area of study',
-    status: 'Add your status',
-    highlights: ['Add a key achievement or detail.'],
+    period: 'Jan 2015 - Mar 2021',
+    qualification: 'G.C.E. Ordinary Level',
+    status: '7As [Inc. Maths & Science], 1B & 1C',
+    highlights: [
+      'Exhibited early excellence across core science and computational logic tracks.',
+      'Active participant in extracurricular activities such as Music [Tabla Visharad], Sports.'],
   },
 ];
