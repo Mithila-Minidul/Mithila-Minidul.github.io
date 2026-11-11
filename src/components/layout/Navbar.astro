@@ -2,30 +2,221 @@
 import { site } from '../../data/site';
 ---
 <nav class="glass navbar" aria-label="Primary">
-  {site.nav.map((item) => <a href={item.href}>{item.label}</a>)}
+  <span class="active-surface" aria-hidden="true"></span>
+  {site.nav.map((item) => (
+    <a class="nav-link" href={item.href} data-nav-link>
+      {item.label}
+    </a>
+  ))}
 </nav>
 
 <style>
   .navbar {
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     top: 16px;
     left: 50%;
-    transform: translateX(-50%);
     display: flex;
-    gap: 4px;
+    width: max-content;
+    max-width: calc(100vw - 24px);
+    gap: 2px;
+    overflow: auto hidden;
     padding: 6px;
+    transform: translateX(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.78);
     border-radius: var(--r-pill);
-    background: var(--glass-strong);
+    background:
+      linear-gradient(155deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.28) 55%, rgba(255, 255, 255, 0.42)),
+      rgba(248, 250, 255, 0.28);
+    box-shadow:
+      0 18px 42px -24px rgba(34, 48, 75, 0.4),
+      0 3px 10px rgba(50, 64, 90, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+    -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(1.04);
+    backdrop-filter: blur(28px) saturate(190%) contrast(1.04);
+    scrollbar-width: none;
+    isolation: isolate;
   }
-  a {
-    padding: 8px 16px;
+  .navbar::-webkit-scrollbar { display: none; }
+  .navbar::before {
+    z-index: -1;
+    opacity: 0.85;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.12) 48%, rgba(120, 145, 180, 0.3));
+  }
+  .navbar::after {
+    z-index: 0;
+    opacity: 0;
+    background:
+      radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.72), transparent 72%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 58%);
+    transition: opacity 240ms ease;
+  }
+  .navbar:hover::after { opacity: 0.72; }
+  .active-surface {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 1px solid rgba(255, 255, 255, 0.86);
     border-radius: var(--r-pill);
-    font-size: 0.95rem;
-    color: var(--slate);
-    transition: background 0.2s, color 0.2s;
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.94), rgba(235, 243, 255, 0.72)),
+      rgba(255, 255, 255, 0.46);
+    box-shadow:
+      0 4px 14px rgba(50, 64, 90, 0.15),
+      0 0 0 1px rgba(0, 113, 227, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.98),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(0, 0, 0);
+    transition:
+      width 420ms cubic-bezier(0.2, 0.75, 0.25, 1),
+      height 420ms cubic-bezier(0.2, 0.75, 0.25, 1),
+      transform 520ms cubic-bezier(0.2, 0.75, 0.25, 1),
+      opacity 160ms ease;
   }
-  a:hover { background: rgba(255, 255, 255, 0.8); color: var(--ink); }
+  .active-surface.is-visible { opacity: 1; }
+  .active-surface::before {
+    position: absolute;
+    inset: 1px 6px auto;
+    height: 45%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), transparent);
+    content: "";
+    pointer-events: none;
+  }
+  .nav-link {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    min-height: 40px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    border-radius: var(--r-pill);
+    color: rgba(48, 55, 67, 0.78);
+    font-size: 0.9rem;
+    font-weight: 520;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 180ms ease, scale 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-link:hover,
+  .nav-link[aria-current="location"] { color: #172033; }
+  .nav-link[aria-current="location"] { font-weight: 650; }
+  .nav-link:active { scale: 0.95; }
+  .nav-link:focus-visible {
+    outline: 2px solid rgba(0, 113, 227, 0.85);
+    outline-offset: -2px;
+  }
 
-  @media (max-width: 480px) { a { padding: 8px 12px; } }
+  @media (max-width: 520px) {
+    .navbar { top: 12px; gap: 0; padding: 5px; }
+    .nav-link { min-height: 38px; padding-inline: 12px; font-size: 0.82rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .active-surface,
+    .nav-link,
+    .navbar::after { transition: none; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .navbar {
+      border-color: rgba(200, 205, 215, 0.9);
+      background: rgba(255, 255, 255, 0.96);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .active-surface {
+      background: rgba(226, 237, 253, 0.98);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 </style>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('.navbar');
+  const indicator = nav?.querySelector<HTMLElement>('.active-surface');
+  const links = [...(nav?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]') ?? [])];
+  const destinations = links
+    .map((link) => ({ link, section: document.querySelector<HTMLElement>(link.hash) }))
+    .filter((item): item is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(item.section));
+
+  if (nav && indicator && links.length) {
+    let activeLink: HTMLAnchorElement | undefined;
+
+    const setActiveLink = (link?: HTMLAnchorElement) => {
+      activeLink = link;
+      for (const candidate of links) {
+        if (candidate === link) candidate.setAttribute('aria-current', 'location');
+        else candidate.removeAttribute('aria-current');
+      }
+
+      if (!link) {
+        indicator.classList.remove('is-visible');
+        return;
+      }
+
+      indicator.style.width = `${link.offsetWidth}px`;
+      indicator.style.height = `${link.offsetHeight}px`;
+      indicator.style.transform = `translate3d(${link.offsetLeft}px, ${link.offsetTop}px, 0)`;
+      indicator.classList.add('is-visible');
+    };
+
+    const hashLink = links.find((link) => link.hash === window.location.hash);
+    if (hashLink) setActiveLink(hashLink);
+
+    nav.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest<HTMLAnchorElement>('[data-nav-link]');
+      if (link) setActiveLink(link);
+    });
+
+    nav.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      const bounds = nav.getBoundingClientRect();
+      nav.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
+      nav.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+    });
+
+    let scrollFrame = 0;
+    const updateActiveFromScroll = () => {
+      scrollFrame = 0;
+      const focusLine = Math.min(window.innerHeight * 0.38, 260);
+      const current = destinations
+        .filter(({ section }) => {
+          const bounds = section.getBoundingClientRect();
+          return bounds.top <= focusLine && bounds.bottom > focusLine;
+        })
+        .at(-1);
+
+      if (current) setActiveLink(current.link);
+      else if (window.scrollY < window.innerHeight * 0.6) setActiveLink(hashLink);
+      else if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+        setActiveLink(destinations.at(-1)?.link);
+      }
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (scrollFrame) return;
+        scrollFrame = window.requestAnimationFrame(updateActiveFromScroll);
+      },
+      { passive: true },
+    );
+    window.addEventListener('resize', () => {
+      if (activeLink) setActiveLink(activeLink);
+    });
+  }
+</script>
