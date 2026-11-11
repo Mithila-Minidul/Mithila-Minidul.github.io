@@ -2,25 +2,46 @@
 import { site } from '../../data/site';
 ---
 <footer class="wrap footer">
-  <p>© {new Date().getFullYear()} {site.name}</p>
-  <p class="links">
-    <a href={site.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    <a href={`mailto:${site.email}`}>Email</a>
+  <p class="credit">Designed and built by <span>Mithila Minidul</span></p>
+  <p class="rights">
+    © {new Date().getFullYear()} Mithila Minidul. All rights reserved.
+    <span>No part of this portfolio may be copied, reproduced, or reused without prior written permission.</span>
   </p>
 </footer>
 
 <style>
   .footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 12px;
-    padding-block: 40px 56px;
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding-block: 32px 40px;
     color: var(--slate);
     font-size: var(--text-sm);
+    text-align: center;
+  }
+  .footer::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 113, 227, 0.22) 22%,
+      rgba(255, 255, 255, 0.9) 50%,
+      rgba(0, 184, 212, 0.22) 78%,
+      transparent
+    );
   }
   p { margin: 0; }
-  .links { display: flex; gap: 20px; }
-  .links a:hover { color: var(--ink); }
+  .credit { color: var(--ink); font-weight: 550; }
+  .credit span { color: var(--blue); }
+  .rights { max-width: 76ch; font-size: 0.78rem; }
+  .rights span { display: block; margin-top: 3px; }
+
+  @media (max-width: 600px) {
+    .footer { padding-block: 26px 32px; }
+    .rights { max-width: 42ch; }
+  }
 </style>
