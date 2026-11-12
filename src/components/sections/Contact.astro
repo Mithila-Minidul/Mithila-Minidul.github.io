@@ -15,6 +15,48 @@ import { siGithub } from 'simple-icons';
         </span>
         <h2>Let's talk</h2>
         <span class="opportunity-types">Internships <span aria-hidden="true">·</span> Freelance <span aria-hidden="true">·</span> Collaborations</span>
+        <div class="contact-envelope" aria-hidden="true">
+          <svg class="contact-envelope-art" viewBox="0 0 360 260" fill="none" focusable="false">
+            <defs>
+              <linearGradient id="contact-envelope-shell" x1="68" y1="76" x2="292" y2="211" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF" stop-opacity="0.88" />
+                <stop offset="0.48" stop-color="#DCEBFF" stop-opacity="0.7" />
+                <stop offset="1" stop-color="#A7C3EE" stop-opacity="0.58" />
+              </linearGradient>
+              <linearGradient id="contact-envelope-paper" x1="112" y1="52" x2="250" y2="158" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF" stop-opacity="0.98" />
+                <stop offset="1" stop-color="#E9F2FF" stop-opacity="0.78" />
+              </linearGradient>
+              <linearGradient id="contact-envelope-fold" x1="80" y1="102" x2="286" y2="205" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF" stop-opacity="0.9" />
+                <stop offset="0.52" stop-color="#D7E7FF" stop-opacity="0.76" />
+                <stop offset="1" stop-color="#9FBCE9" stop-opacity="0.7" />
+              </linearGradient>
+              <linearGradient id="contact-envelope-seal" x1="170" y1="151" x2="190" y2="177" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFFFFF" stop-opacity="0.96" />
+                <stop offset="1" stop-color="#83AEEA" stop-opacity="0.84" />
+              </linearGradient>
+              <radialGradient id="contact-envelope-halo" cx="0" cy="0" r="1" gradientTransform="matrix(0 96 -137 0 180 125)" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#B9D7FF" stop-opacity="0.32" />
+                <stop offset="1" stop-color="#D8E9FF" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <ellipse cx="180" cy="132" rx="137" ry="92" fill="url(#contact-envelope-halo)" />
+            <ellipse cx="180" cy="218" rx="103" ry="13" fill="#5277AD" fill-opacity="0.2" filter="blur(8px)" />
+            <g class="envelope-glass">
+              <rect x="62" y="76" width="236" height="135" rx="22" fill="url(#contact-envelope-shell)" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="1.5" />
+              <path d="M103 126V64a12 12 0 0 1 12-12h130a12 12 0 0 1 12 12v62" fill="url(#contact-envelope-paper)" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="1.5" />
+              <path d="M128 79h101M128 94h82M128 109h91" stroke="#6488BA" stroke-opacity="0.24" stroke-linecap="round" stroke-width="4" />
+              <path d="m64 82 116 79L64 198V82Z" fill="url(#contact-envelope-fold)" fill-opacity="0.74" stroke="#FFFFFF" stroke-opacity="0.76" stroke-width="1.2" />
+              <path d="m296 82-116 79 116 37V82Z" fill="url(#contact-envelope-fold)" fill-opacity="0.6" stroke="#FFFFFF" stroke-opacity="0.68" stroke-width="1.2" />
+              <path d="m64 124 116 73 116-73v67c0 11-9 20-20 20H84c-11 0-20-9-20-20v-67Z" fill="url(#contact-envelope-fold)" stroke="#FFFFFF" stroke-opacity="0.92" stroke-width="1.5" />
+              <path d="M68 127 180 198l112-71" stroke="#FFFFFF" stroke-opacity="0.8" stroke-linecap="round" stroke-width="1.4" />
+              <path d="M81 91c26 1 43 10 60 23" stroke="#FFFFFF" stroke-opacity="0.78" stroke-linecap="round" stroke-width="3" />
+              <circle cx="180" cy="164" r="13" fill="url(#contact-envelope-seal)" stroke="#FFFFFF" stroke-opacity="0.94" stroke-width="1.5" />
+              <circle cx="180" cy="164" r="4" fill="#FFFFFF" fill-opacity="0.84" />
+            </g>
+          </svg>
+        </div>
       </div>
       <div class="contact-details">
         <p class="contact-description">
@@ -74,6 +116,11 @@ import { siGithub } from 'simple-icons';
       transform: translateX(500%) rotate(-22deg);
     }
     18%, 100% { opacity: 0; }
+  }
+
+  @keyframes contact-envelope-float {
+    0%, 100% { transform: perspective(900px) rotateX(8deg) rotateY(-12deg) rotateZ(-4deg) translateY(0); }
+    50% { transform: perspective(900px) rotateX(8deg) rotateY(-12deg) rotateZ(-4deg) translateY(-7px); }
   }
 
   .section { padding-block: 96px; }
@@ -234,6 +281,20 @@ import { siGithub } from 'simple-icons';
     font-size: 0.95rem;
     line-height: 1.6;
   }
+  .contact-envelope {
+    width: min(100%, 290px);
+    margin-top: 24px;
+    filter: drop-shadow(0 22px 28px rgba(56, 85, 130, 0.18));
+    perspective: 900px;
+  }
+  .contact-envelope-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    transform-style: preserve-3d;
+    animation: contact-envelope-float 7s ease-in-out infinite;
+  }
   .contact-details { min-width: 0; }
   .contact-description {
     margin: 0 0 14px;
@@ -386,6 +447,7 @@ import { siGithub } from 'simple-icons';
     .section :global(.contact-actions .contact-email)::before,
     .section :global(.contact-actions .contact-github)::before,
     .section :global(.contact-actions .contact-linkedin)::before,
+    .contact-envelope-art,
     h2,
     p {
       transition: none;
@@ -402,6 +464,7 @@ import { siGithub } from 'simple-icons';
     .section :global(.contact) { padding: 40px 28px; }
     .contact-layout { grid-template-columns: 1fr; gap: 28px; }
     .contact-intro h2 { margin-top: 16px; }
+    .contact-envelope { width: min(100%, 250px); margin: 20px auto 0; }
   }
 
   @media (max-width: 480px) {
