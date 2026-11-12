@@ -9,7 +9,10 @@ import { education } from '../../data/education';
       <article class="timeline-entry" style={`--reveal-order: ${index}`}>
         <GlassCard as="div" strong class="education-card">
           <div class="content">
-            <span class="period">{entry.period}</span>
+            <span class="period">
+              <span class="period-label">{entry.period}</span>
+              <span class="period-shine" aria-hidden="true"></span>
+            </span>
             <h3>{entry.institution}</h3>
             <h4>{entry.qualification}</h4>
             <p class="status">{entry.status}</p>
@@ -25,6 +28,22 @@ import { education } from '../../data/education';
 </section>
 
 <style>
+  @keyframes education-period-shine {
+    0% {
+      opacity: 0;
+      transform: translateX(0) rotate(-22deg);
+    }
+    8% { opacity: 1; }
+    37% {
+      opacity: 0.75;
+      transform: translateX(360%) rotate(-22deg);
+    }
+    45%, 100% {
+      opacity: 0;
+      transform: translateX(360%) rotate(-22deg);
+    }
+  }
+
   .section { padding-block: 96px; }
   h2 { margin-bottom: 40px; }
   .timeline {
@@ -88,7 +107,11 @@ import { education } from '../../data/education';
     padding: 10px;
   }
   .period {
+    position: relative;
+    isolation: isolate;
     display: inline-block;
+    overflow: hidden;
+    align-items: center;
     margin-bottom: 12px;
     padding: 6px 12px;
     border: 1px solid rgba(255, 255, 255, 0.86);
@@ -106,6 +129,33 @@ import { education } from '../../data/education';
     color: #172033;
     font-size: var(--text-sm);
     font-weight: 650;
+  }
+  .period-label { position: relative; z-index: 2; }
+  .period-shine {
+    position: absolute;
+    z-index: 1;
+    top: -45%;
+    bottom: -45%;
+    left: -32%;
+    width: 38%;
+    border-radius: var(--r-pill);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(71, 139, 226, 0.34) 28%,
+      rgba(255, 255, 255, 0.92) 43%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(212, 231, 255, 0.96) 58%,
+      rgba(71, 139, 226, 0.4) 74%,
+      transparent
+    );
+    filter: drop-shadow(0 0 6px rgba(0, 113, 227, 0.62));
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(0) rotate(-22deg);
+  }
+  .timeline-entry :global(.education-card:hover) .period-shine {
+    animation: education-period-shine 3.6s ease-in-out infinite;
   }
   h3 { margin: 0 0 8px; font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.25; }
   h4 { margin: 0 0 6px; color: #008ca3; font-size: 1.1rem; line-height: 1.4; }
@@ -126,6 +176,7 @@ import { education } from '../../data/education';
     .logo { width: 76px; border-radius: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
+    .period-shine { animation: none; }
     .reveal-ready .timeline-entry {
       opacity: 1;
       filter: none;
