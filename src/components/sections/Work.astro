@@ -2,32 +2,154 @@
 import GlassCard from '../ui/GlassCard.astro';
 import Tag from '../ui/Tag.astro';
 import { projects } from '../../data/projects';
+
+const projectRows = projects.map((project, index) => ({ project, index }));
 ---
 <section id="work" class="wrap section">
-  <h2>Selected work</h2>
+  <div class="section-heading">
+    <div>
+      <h2>Selected work</h2>
+    </div>
+  </div>
   <div class="bento">
-    {projects.map((p) => (
-      <GlassCard as="article" strong={p.featured} class={p.featured ? 'card featured' : 'card'}>
-        <h3>{p.title}</h3>
-        <p>{p.summary}</p>
-        <div class="tags">{p.tags.map((t) => <Tag>{t}</Tag>)}</div>
-        {p.caseStudy && <a class="more" href={`/work/${p.slug}`}>Read case study</a>}
-      </GlassCard>
+    {projectRows.map(({ project, index }) => (
+      <div class="project-row">
+        <div class="project-cards">
+          <article
+            class="project-card"
+            data-project={index}
+          >
+            <GlassCard as="div" strong class="card">
+              <div class="project-layout">
+                <div class="project-copy">
+                  <div class="project-kicker">
+                    <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span>Selected build</span>
+                  </div>
+                  <h3>{project.title}</h3>
+                  <p class="summary">{project.summary}</p>
+                  <div class="tags">{project.tags.map((tag) => <Tag>{tag}</Tag>)}</div>
+                  {project.details && (
+                    <button
+                      class="details-toggle"
+                      type="button"
+                      aria-expanded="false"
+                      aria-controls={`project-details-${index}`}
+                    >
+                      <span class="toggle-label">Explore project details</span>
+                      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M4.5 10h10m-4-4 4 4-4 4" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+                <figure class="project-visual">
+                  {project.preview ? (
+                    <img src={project.preview.src} alt={project.preview.alt} loading="lazy" />
+                  ) : (
+                    <div class="visual-placeholder" aria-hidden="true">
+                      <span class="visual-orbit orbit-one"></span>
+                      <span class="visual-orbit orbit-two"></span>
+                      <span class="visual-index">{String(index + 1).padStart(2, '0')}</span>
+                      <span class="visual-caption">{project.tags[0]}</span>
+                    </div>
+                  )}
+                </figure>
+              </div>
+            </GlassCard>
+          </article>
+        </div>
+        {project.details && (
+          <div
+            class="detail-panel"
+            id={`project-details-${index}`}
+            data-project-panel={index}
+            aria-hidden="true"
+            inert
+          >
+            <div class="detail-inner">
+              <p class="detail-label">PROJECT OVERVIEW</p>
+              <p class="overview">{project.details.overview}</p>
+              {project.details.highlights.length > 0 && (
+                <ul class="highlights">
+                  {project.details.highlights.map((highlight) => (
+                    <li>
+                      <strong>{highlight.title}</strong>
+                      <span>{highlight.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     ))}
   </div>
 </section>
 
 <style>
   .section { padding-block: 96px; }
-  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
-  .bento :global(.card) {
-    grid-column: span 2;
+  .section-heading {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-height: 260px;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 36px;
   }
-  .bento :global(.card.featured) { grid-column: span 4; min-height: 320px; }
+  .eyebrow {
+    margin: 0 0 10px;
+    color: var(--blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+  h2 { margin: 0; }
+  .section-intro { max-width: 38ch; margin: 0 0 4px; color: var(--slate); }
+  .bento { display: grid; gap: 20px; }
+  .project-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .project-cards {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    align-items: start;
+    gap: 20px;
+  }
+  .project-card { grid-column: span 4; min-width: 0; }
+  .project-row:nth-child(even) .project-card { grid-column: 3 / span 4; }
+  .bento :global(.card) { padding: 22px; }
+  .project-layout {
+    display: grid;
+    min-height: 224px;
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 0.72fr);
+    align-items: stretch;
+    gap: 24px;
+  }
+  .project-copy { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; }
+  .project-kicker {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 20px;
+    color: var(--slate);
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .project-number {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.84);
+    border-radius: 9px;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(221, 235, 255, 0.62));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 3px 8px rgba(49, 77, 119, 0.1);
+    color: var(--blue);
+    font-size: 0.68rem;
+    letter-spacing: 0;
+  }
   .bento :global(.card)::before {
     inset: -1px;
     padding: 2px;
@@ -43,34 +165,201 @@ import { projects } from '../../data/projects';
     opacity: 0;
     transition: opacity 180ms ease;
   }
-  .bento :global(.card:hover)::before {
+  .bento :global(.card:hover)::before,
+  .project-card:focus-within :global(.card)::before {
     opacity: 1;
     filter: drop-shadow(0 0 7px rgba(0, 153, 255, 0.62));
   }
-  h3 { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
-  p { margin: 0; color: var(--slate); max-width: 52ch; }
-  .tags { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
-  .more { font-weight: 550; color: var(--blue); }
-  .more:hover { text-decoration: underline; }
+  .project-copy h3 { margin: 0 0 8px; font-size: clamp(1.45rem, 2.4vw, 1.9rem); letter-spacing: -0.035em; }
+  .summary { max-width: 48ch; margin: 0 0 18px; color: var(--slate); line-height: 1.55; }
+  .project-visual {
+    position: relative;
+    display: grid;
+    min-height: 224px;
+    overflow: hidden;
+    place-items: center;
+    margin: 0;
+    border: 1px solid rgba(255, 255, 255, 0.84);
+    border-radius: var(--r-md);
+    background:
+      radial-gradient(ellipse at 18% 0%, rgba(255, 255, 255, 0.96), transparent 58%),
+      radial-gradient(ellipse at 85% 100%, rgba(113, 165, 232, 0.34), transparent 66%),
+      linear-gradient(145deg, rgba(226, 238, 255, 0.78), rgba(245, 248, 255, 0.42) 48%, rgba(218, 234, 255, 0.66));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.96),
+      inset 0 -18px 34px rgba(92, 130, 185, 0.08);
+  }
+  .project-visual img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .visual-placeholder { position: absolute; inset: 0; display: grid; overflow: hidden; place-items: center; }
+  .visual-orbit {
+    position: absolute;
+    width: 150px;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.62), rgba(161, 197, 244, 0.1) 62%, transparent 70%);
+    box-shadow: inset 0 1px 10px rgba(255, 255, 255, 0.62), 0 12px 30px rgba(75, 120, 186, 0.12);
+  }
+  .orbit-one { transform: translate(-24px, 12px) scale(0.9); }
+  .orbit-two { transform: translate(32px, -20px) scale(0.56); }
+  .visual-index {
+    position: relative;
+    z-index: 1;
+    color: rgba(37, 75, 130, 0.78);
+    font-size: clamp(4.5rem, 9vw, 7rem);
+    font-weight: 650;
+    letter-spacing: -0.1em;
+    line-height: 1;
+    text-shadow: 0 2px 18px rgba(255, 255, 255, 0.92);
+  }
+  .visual-caption {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    overflow: hidden;
+    padding: 8px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.82);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.52);
+    color: #435b7a;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin: auto 0 18px; }
+  .tags :global(.tag) {
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.58);
+    color: #465365;
+    font-size: 0.76rem;
+  }
+  .details-toggle {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 9px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--blue);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+  .details-toggle svg { width: 18px; height: 18px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; transition: transform 200ms ease; }
+  .details-toggle:hover svg { transform: translateX(4px); }
+  .details-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 4px; }
+  .details-toggle[aria-expanded="true"] svg { transform: rotate(90deg); }
+  .detail-panel {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-rows: 0fr;
+    margin-top: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      grid-template-rows 380ms cubic-bezier(0.2, 0.75, 0.25, 1),
+      margin-top 380ms cubic-bezier(0.2, 0.75, 0.25, 1),
+      opacity 220ms ease,
+      visibility 0s linear 380ms;
+  }
+  .detail-panel.is-open {
+    grid-template-rows: 1fr;
+    margin-top: 4px;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s, 0s, 40ms, 0s;
+  }
+  .detail-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 28px;
+    border: 0;
+    border-radius: var(--r-lg);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(235, 243, 255, 0.48)), rgba(255, 255, 255, 0.46);
+    box-shadow: 0 14px 36px -28px rgba(34, 52, 86, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    backdrop-filter: blur(24px) saturate(170%);
+    transition: padding 380ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+  .detail-panel.is-open .detail-inner { padding: 24px 28px; border: 1px solid rgba(255, 255, 255, 0.78); }
+  .detail-label { margin: 0 0 10px; color: var(--blue); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; }
+  .overview { max-width: 72ch; margin: 0 0 20px; color: var(--ink); line-height: 1.65; }
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: 16px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .highlights li { display: grid; gap: 4px; }
+  .highlights strong { color: var(--ink); font-size: 0.92rem; }
+  .highlights span { color: var(--slate); font-size: 0.9rem; line-height: 1.5; }
 
   @media (max-width: 760px) {
-    .bento :global(.card), .bento :global(.card.featured) { grid-column: span 6; min-height: 0; }
+    .section-heading { align-items: start; flex-direction: column; gap: 12px; }
+    .project-card,
+    .project-row:nth-child(even) .project-card { grid-column: 1 / -1; }
+    .project-layout { min-height: 205px; grid-template-columns: minmax(0, 1fr) minmax(140px, 0.72fr); gap: 18px; }
+    .project-visual { min-height: 205px; }
   }
-  @media (hover: none) {
-    .bento :global(.card:hover)::before { opacity: 0; }
+  @media (max-width: 520px) {
+    .bento :global(.card) { padding: 18px; }
+    .project-layout { grid-template-columns: 1fr; gap: 18px; }
+    .project-visual { min-height: 180px; grid-row: 1; }
+    .project-kicker { margin-bottom: 14px; }
+    .tags { margin-bottom: 14px; }
+    .detail-panel.is-open .detail-inner { padding: 20px; }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .detail-inner { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .bento :global(.card)::before { transition: none; }
+    .bento :global(.card)::before,
+    .details-toggle svg,
+    .detail-panel,
+    .detail-inner { transition: none; }
   }
 </style>
 
 <script>
-  const cards = document.querySelectorAll<HTMLElement>('#work .bento .card');
+  const projectToggles = document.querySelectorAll<HTMLButtonElement>('#work .details-toggle');
 
+  for (const toggle of projectToggles) {
+    toggle.addEventListener('click', () => {
+      const panelId = toggle.getAttribute('aria-controls');
+      const panel = panelId ? document.getElementById(panelId) : null;
+      if (!panel) return;
+
+      const shouldOpen = toggle.getAttribute('aria-expanded') !== 'true';
+      for (const openToggle of projectToggles) {
+        const openPanelId = openToggle.getAttribute('aria-controls');
+        const openPanel = openPanelId ? document.getElementById(openPanelId) : null;
+        const isOpen = shouldOpen && openToggle === toggle;
+
+        openToggle.setAttribute('aria-expanded', String(isOpen));
+        const label = openToggle.querySelector<HTMLElement>('.toggle-label');
+        if (label) label.textContent = isOpen ? 'Close project details' : 'Explore project details';
+        if (openPanel) {
+          openPanel.classList.toggle('is-open', isOpen);
+          openPanel.setAttribute('aria-hidden', String(!isOpen));
+          openPanel.inert = !isOpen;
+        }
+      }
+    });
+  }
+
+  const cards = document.querySelectorAll<HTMLElement>('#work .project-card .card');
   for (const card of cards) {
     card.addEventListener('pointermove', (event) => {
       if (event.pointerType !== 'mouse') return;
-
       const bounds = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
       card.style.setProperty('--my', `${event.clientY - bounds.top}px`);
