@@ -5,8 +5,8 @@ export const site = {
   headline: 'Software that feels effortless.',
   intro: 'I design and build fast, reliable products from the interface down to the database.',
   about: [
-    'Hi!, My name is Mithila Minidul. I am a software engineering undergraduate at SLIIT, who enjoys building complete products, from the mobile interface to the API and the database.',
-    'I have worked across React Native, Flutter, Node.js, Express, .NET and MongoDB, Postgress etc. with varity of Stacks.',
+    'Hi!, my name is Mithila Minidul. I am a software engineering undergraduate at SLIIT, who enjoys building complete products, from the mobile interface to the API and the database.',
+    'I have worked across React Native, Flutter, Node.js, Express, .NET and MongoDB, Postgress etc. with a variety of stacks.',
     'And love to collaborate with real world projects and get the knowledge and experiences with my best of work.'
   ],
   title: 'Mithila Minidul | Portfolio',
