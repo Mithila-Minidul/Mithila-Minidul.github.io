@@ -5,8 +5,9 @@ export const site = {
   headline: 'Software that feels effortless.',
   intro: 'I design and build fast, reliable products from the interface down to the database.',
   about: [
-    'I am a software engineering undergraduate who enjoys building complete products, from the mobile interface to the API and the database.',
-    'My main project is BoardMate, a location-aware boarding house marketplace for Sri Lanka. I work across React Native, Expo, Node.js, Express and MongoDB.',
+    'Hi!, My name is Mithila Minidul. I am a software engineering undergraduate at SLIIT, who enjoys building complete products, from the mobile interface to the API and the database.',
+    'I have worked across React Native, Flutter, Node.js, Express, .NET and MongoDB, Postgress etc. with varity of Stacks.',
+    'And love to collaborate with real world projects and get the knowledge and experiences with my best of work.'
   ],
   title: 'Mithila Minidul | Portfolio',
   description: 'Hi!. Iam Software engineer undergraduate at SLIIT. I am passinate to build mobile apps and webs and building fast, reliable products across mobile, web and backend.',
