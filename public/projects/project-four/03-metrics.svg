@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project four</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Performance metrics</text>
+  <rect x="64" y="188" width="772" height="326" rx="20" fill="#fff"/><text x="94" y="231" fill="#263e59" font-family="Arial,sans-serif" font-size="17" font-weight="700">Response time · last 24 hours</text>
+  <path d="M112 449h684M112 280v169" stroke="#dce5ef" stroke-width="2"/><path d="M130 390 197 370l60 12 69-85 72 49 67-22 70 46 68-86 72 34 71-55" fill="none" stroke="#168b78" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="96" y="468" width="156" height="30" rx="15" fill="#e7f2ef"/><text x="116" y="489" fill="#337769" font-family="Arial,sans-serif" font-size="13">Avg. 142 ms</text><rect x="272" y="468" width="156" height="30" rx="15" fill="#e6edf8"/><text x="292" y="489" fill="#526b8b" font-family="Arial,sans-serif" font-size="13">Peak 216 ms</text>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

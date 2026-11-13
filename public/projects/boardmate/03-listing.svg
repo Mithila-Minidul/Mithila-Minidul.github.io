@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <defs><linearGradient id="photo" x2="1" y2="1"><stop stop-color="#c9e2ef"/><stop offset="1" stop-color="#7faeaa"/></linearGradient></defs>
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">BoardMate</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text>
+  <rect x="64" y="136" width="772" height="232" rx="22" fill="url(#photo)"/><circle cx="700" cy="210" r="80" fill="#fff" fill-opacity=".22"/><path d="M64 320 210 214l115 78 145-120 128 95 112-66 126 80v87H64Z" fill="#527e75" fill-opacity=".6"/>
+  <text x="64" y="416" fill="#1e334b" font-family="Arial,sans-serif" font-size="28" font-weight="700">Quiet private room</text><text x="64" y="447" fill="#71849b" font-family="Arial,sans-serif" font-size="15">Matara · furnished · utilities included</text>
+  <rect x="64" y="472" width="110" height="34" rx="17" fill="#d9eee8"/><text x="85" y="494" fill="#337769" font-family="Arial,sans-serif" font-size="13">Verified</text>
+  <text x="624" y="422" fill="#168b78" font-family="Arial,sans-serif" font-size="23" font-weight="700">LKR 30,000</text><text x="624" y="449" fill="#71849b" font-family="Arial,sans-serif" font-size="14">per month</text><rect x="624" y="472" width="174" height="42" rx="14" fill="#168b78"/><text x="654" y="499" fill="#fff" font-family="Arial,sans-serif" font-size="14" font-weight="700">Contact owner</text>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

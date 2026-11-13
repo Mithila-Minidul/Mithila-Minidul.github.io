@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project two</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Recent activity</text>
+  <rect x="64" y="188" width="772" height="335" rx="20" fill="#fff"/><path d="M111 240v225" stroke="#dce5ef" stroke-width="3"/>
+  <g font-family="Arial,sans-serif"><circle cx="111" cy="248" r="13" fill="#168b78"/><text x="148" y="244" fill="#263e59" font-size="17" font-weight="700">Design review completed</text><text x="148" y="268" fill="#71849b" font-size="14">The team approved the latest screen flow</text><text x="726" y="254" fill="#8a99aa" font-size="12">10:42 AM</text>
+  <circle cx="111" cy="332" r="13" fill="#89a5d0"/><text x="148" y="328" fill="#263e59" font-size="17" font-weight="700">New task added</text><text x="148" y="352" fill="#71849b" font-size="14">Update project documentation</text><text x="726" y="338" fill="#8a99aa" font-size="12">Yesterday</text>
+  <circle cx="111" cy="416" r="13" fill="#c1a8da"/><text x="148" y="412" fill="#263e59" font-size="17" font-weight="700">Milestone reached</text><text x="148" y="436" fill="#71849b" font-size="14">First release is ready for testing</text><text x="726" y="422" fill="#8a99aa" font-size="12">Mar 12</text></g>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

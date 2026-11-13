@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">BoardMate</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text>
+  <text x="64" y="158" fill="#1e334b" font-family="Arial,sans-serif" font-size="28" font-weight="700">Messages</text><rect x="64" y="180" width="772" height="350" rx="20" fill="#fff"/>
+  <circle cx="112" cy="230" r="24" fill="#c6d9ee"/><text x="153" y="225" fill="#263e59" font-family="Arial,sans-serif" font-size="17" font-weight="700">Property owner</text><text x="153" y="247" fill="#71849b" font-family="Arial,sans-serif" font-size="13">About the room near campus</text><path d="M90 280h386a18 18 0 0 1 18 18v48a18 18 0 0 1-18 18H90a18 18 0 0 1-18-18v-48a18 18 0 0 1 18-18Z" fill="#eef3fa"/><text x="96" y="311" fill="#53677f" font-family="Arial,sans-serif" font-size="15">Hi, is the room still available?</text>
+  <path d="M408 386h372a18 18 0 0 1 18 18v48a18 18 0 0 1-18 18H408a18 18 0 0 1-18-18v-48a18 18 0 0 1 18-18Z" fill="#d9eee8"/><text x="431" y="417" fill="#337769" font-family="Arial,sans-serif" font-size="15">Yes, it is available for viewing.</text><text x="431" y="440" fill="#337769" font-family="Arial,sans-serif" font-size="15">Let me know what time works.</text>
+  <rect x="80" y="482" width="690" height="32" rx="16" fill="#f1f5fa"/><text x="101" y="503" fill="#8a99aa" font-family="Arial,sans-serif" font-size="13">Write a message...</text>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

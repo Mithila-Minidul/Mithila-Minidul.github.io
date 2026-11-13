@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project four</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Service architecture</text>
+  <rect x="64" y="188" width="772" height="330" rx="20" fill="#fff"/>
+  <g stroke="#b8c8dc" stroke-width="4"><path d="M253 348h100M447 348h100M641 348h100M156 284v-44h198M447 284v-44h194M350 412v46h194"/></g>
+  <g><rect x="98" y="296" width="155" height="104" rx="16" fill="#e6edf8"/><rect x="350" y="296" width="97" height="104" rx="16" fill="#e7f2ef"/><rect x="544" y="296" width="97" height="104" rx="16" fill="#f0edf8"/><rect x="738" y="296" width="68" height="104" rx="16" fill="#e6edf8"/><rect x="350" y="458" width="194" height="42" rx="14" fill="#edf2f8"/></g>
+  <g fill="#263e59" font-family="Arial,sans-serif" font-size="13" text-anchor="middle"><text x="175" y="342">Client app</text><text x="175" y="364">Web / mobile</text><text x="398" y="351">API</text><text x="592" y="351">Data</text><text x="772" y="351">Cache</text><text x="447" y="485">External services</text></g>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

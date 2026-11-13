@@ -6,7 +6,7 @@ export interface Project {
     overview: string;
     highlights: { title: string; text: string }[];
   };
-  preview?: { src: string; alt: string };
+  previews?: { src: string; alt: string }[];
 }
 
 export const projects: Project[] = [
@@ -14,6 +14,12 @@ export const projects: Project[] = [
     title: 'BoardMate',
     summary: 'A location-aware housing marketplace for students and boarding owners.',
     tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
+    previews: [
+      { src: '/projects/boardmate/01-discover.svg', alt: 'BoardMate mock preview: discover nearby boarding options' },
+      { src: '/projects/boardmate/02-map.svg', alt: 'BoardMate mock preview: browse listings on a map' },
+      { src: '/projects/boardmate/03-listing.svg', alt: 'BoardMate mock preview: review a boarding listing' },
+      { src: '/projects/boardmate/04-messages.svg', alt: 'BoardMate mock preview: chat with a property owner' },
+    ],
     details: {
       overview:
         'BoardMate connects people looking for housing with boarding owners publishing localized properties. Students can discover places close to where they need to be.',
@@ -45,6 +51,12 @@ export const projects: Project[] = [
     title: 'Project two',
     summary: 'Add a concise project summary, the problem it solves, and the result.',
     tags: ['Your', 'Stack'],
+    previews: [
+      { src: '/projects/project-two/01-dashboard.svg', alt: 'Project two mock preview: dashboard' },
+      { src: '/projects/project-two/02-activity.svg', alt: 'Project two mock preview: activity view' },
+      { src: '/projects/project-two/03-reports.svg', alt: 'Project two mock preview: reports view' },
+      { src: '/projects/project-two/04-profile.svg', alt: 'Project two mock preview: profile view' },
+    ],
     details: {
       overview:
         'Mock content for testing this expanded panel. Replace it with the real project context, your approach, and the outcome before publishing.',
@@ -68,6 +80,12 @@ export const projects: Project[] = [
     title: 'Project three',
     summary: 'Add a concise summary of the project and its impact.',
     tags: ['Your', 'Stack'],
+    previews: [
+      { src: '/projects/project-three/01-overview.svg', alt: 'Project three mock preview: overview' },
+      { src: '/projects/project-three/02-workspace.svg', alt: 'Project three mock preview: workspace' },
+      { src: '/projects/project-three/03-insights.svg', alt: 'Project three mock preview: insights view' },
+      { src: '/projects/project-three/04-settings.svg', alt: 'Project three mock preview: settings view' },
+    ],
     details: {
       overview:
         'Short mock content for checking how a compact detail panel expands beneath its card.',
@@ -87,6 +105,12 @@ export const projects: Project[] = [
     title: 'Project four',
     summary: 'Replace with your next project, or remove this card and the grid will adapt.',
     tags: ['Your', 'Stack'],
+    previews: [
+      { src: '/projects/project-four/01-overview.svg', alt: 'Project four mock preview: overview' },
+      { src: '/projects/project-four/02-architecture.svg', alt: 'Project four mock preview: architecture view' },
+      { src: '/projects/project-four/03-metrics.svg', alt: 'Project four mock preview: metrics view' },
+      { src: '/projects/project-four/04-release.svg', alt: 'Project four mock preview: release view' },
+    ],
     details: {
       overview:
         'Longer mock content for testing a featured card with a larger set of project details. Replace this sample with a clear explanation of the problem, your role, the solution, and the result.',

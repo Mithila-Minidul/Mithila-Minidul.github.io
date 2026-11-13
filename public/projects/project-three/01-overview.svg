@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project three</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Overview</text>
+  <rect x="64" y="189" width="772" height="318" rx="20" fill="#fff"/><text x="96" y="232" fill="#263e59" font-family="Arial,sans-serif" font-size="17" font-weight="700">Your performance</text><text x="96" y="289" fill="#65558e" font-family="Arial,sans-serif" font-size="34" font-weight="700">78.4</text><text x="96" y="316" fill="#71849b" font-family="Arial,sans-serif" font-size="14">Overall score</text>
+  <path d="M92 444 196 414l102 14 107-87 105 36 106-70 124 25" fill="none" stroke="#7665a9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M92 444 196 414l102 14 107-87 105 36 106-70 124 25v69H92Z" fill="#7665a9" fill-opacity=".09"/>
+  <rect x="604" y="224" width="192" height="96" rx="16" fill="#f0edf8"/><text x="628" y="262" fill="#71849b" font-family="Arial,sans-serif" font-size="13">This week</text><text x="628" y="298" fill="#65558e" font-family="Arial,sans-serif" font-size="24" font-weight="700">+12.8%</text>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>

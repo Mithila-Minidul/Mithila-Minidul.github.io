@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
+  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
+  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project three</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Insights</text>
+  <rect x="64" y="188" width="772" height="327" rx="20" fill="#fff"/><text x="94" y="231" fill="#263e59" font-family="Arial,sans-serif" font-size="17" font-weight="700">Usage over time</text>
+  <path d="M122 444h658M122 285v159" stroke="#dce5ef" stroke-width="2"/><path d="M144 412c42-14 55-78 102-70s62 42 108 23 64-83 111-66 63 77 110 58 68-76 108-57 48 4 78-15" fill="none" stroke="#7665a9" stroke-width="8" stroke-linecap="round"/><path d="M144 412c42-14 55-78 102-70s62 42 108 23 64-83 111-66 63 77 110 58 68-76 108-57 48 4 78-15v159H144Z" fill="#7665a9" fill-opacity=".08"/>
+  <rect x="634" y="212" width="167" height="52" rx="13" fill="#f0edf8"/><text x="655" y="244" fill="#65558e" font-family="Arial,sans-serif" font-size="14" font-weight="700">Last 30 days</text>
+  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
+</svg>
