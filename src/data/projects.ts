@@ -2,6 +2,7 @@ export interface Project {
   title: string;
   summary: string;
   tags: string[];
+  showStackIcons?: boolean;
   details?: {
     overview: string;
     highlights: { title: string; text: string }[];
@@ -50,7 +51,8 @@ export const projects: Project[] = [
   {
     title: 'TripCraft',
     summary: 'AI-integrated Travel Planning & Itinerary Platform',
-    tags: ['React', 'python', 'Flutter' ,'.Net', 'PostgreSQL'],
+    tags: ['React', 'Python', 'Flutter', '.NET', 'PostgreSQL'],
+    showStackIcons: true,
     previews: [
       { src: '/projects/tripcraft/01-home.png', alt: 'Project tripcraft preview: Landing Page' },
       { src: '/projects/tripcraft/02-register.png', alt: 'Project tripcraft  preview: Register Page' },

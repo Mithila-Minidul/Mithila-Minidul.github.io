@@ -13,7 +13,7 @@ export const technicalSkills: TechnicalSkillCategory[] = [
   {
     group: 'Backend Architecture',
     description: 'Developing robust, secure, and scalable server-side systems.',
-    items: ['Java', '.NET', 'Spring Boot', 'Node.js', 'Express.js', 'Socket.io'],
+    items: ['Java', '.NET', 'Python', 'Spring Boot', 'Node.js', 'Express.js', 'Socket.io'],
   },
   {
     group: 'Database & Core Tools',
