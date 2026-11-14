@@ -45,7 +45,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                 </div>
                 <figure
                   class="project-visual"
-                  aria-label={`${project.title} project previews. Swipe or use the left and right arrow keys to browse.`}
+                  aria-label={`${project.title} project previews. Click to view full screen; swipe or use the left and right arrow keys to browse.`}
                   aria-roledescription="carousel"
                   role="group"
                   tabindex={project.previews?.length ? 0 : undefined}
@@ -86,6 +86,14 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                       <span>PROJECT PREVIEWS</span>
                       <span>Coming soon</span>
                     </div>
+                  )}
+                  {project.previews?.length && (
+                    <span class="preview-expand-hint" aria-hidden="true">
+                      <svg viewBox="0 0 20 20" fill="none">
+                        <path d="M7 3.5H3.5V7M13 3.5h3.5V7M3.5 13v3.5H7M16.5 13v3.5H13" />
+                      </svg>
+                      View full screen
+                    </span>
                   )}
                 </figure>
               </div>
@@ -231,10 +239,17 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     opacity: 0;
     transition: opacity 180ms ease;
   }
+  .bento :global(.card)::after {
+    background: radial-gradient(160px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.28), transparent 60%);
+  }
   .bento :global(.card:hover)::before,
   .project-card:focus-within :global(.card)::before {
     opacity: 1;
     filter: drop-shadow(0 0 7px rgba(0, 153, 255, 0.62));
+  }
+  .bento :global(.card:hover)::after,
+  .project-card:focus-within :global(.card)::after {
+    opacity: 0.4;
   }
   .project-copy h3 { margin: 0 0 8px; font-size: clamp(1.45rem, 2.4vw, 1.9rem); letter-spacing: -0.035em; }
   .summary { max-width: 48ch; margin: 0 0 18px; color: var(--slate); line-height: 1.55; }
@@ -254,7 +269,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
       inset 0 -18px 34px rgba(92, 130, 185, 0.08);
   }
   .project-visual[data-preview-carousel] {
-    cursor: grab;
+    cursor: zoom-in;
     touch-action: pan-y;
     user-select: none;
   }
@@ -281,6 +296,27 @@ const projectRows = projects.map((project, index) => ({ project, index }));
   }
   .preview-empty span:first-child { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; }
   .preview-empty span:last-child { color: var(--slate); font-size: 0.82rem; }
+  .preview-expand-hint {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.86);
+    border-radius: var(--r-pill);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 4px 14px rgba(39, 62, 94, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.94);
+    color: #435b7a;
+    font-size: 0.68rem;
+    font-weight: 650;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+  }
+  .preview-expand-hint svg { width: 15px; height: 15px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
   .preview-dialog {
     position: fixed;
     width: min(94vw, 1120px);
@@ -606,7 +642,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
 
       autoplayTimer = window.setTimeout(() => {
         autoplayTimer = 0;
-        if (carousel.matches(':hover') || carousel.contains(document.activeElement) || activePointerId !== null) return;
+        if (carousel.contains(document.activeElement) || activePointerId !== null) return;
         setPosition(currentIndex + 1);
         scheduleAutoplay();
       }, autoplayDelay);
@@ -642,8 +678,6 @@ const projectRows = projects.map((project, index) => ({ project, index }));
       if (event.target === track && event.propertyName === 'transform') normalizeClonedSlide();
     });
 
-    carousel.addEventListener('pointerenter', pauseAutoplay);
-    carousel.addEventListener('pointerleave', scheduleAutoplay);
     carousel.addEventListener('focusin', pauseAutoplay);
     carousel.addEventListener('focusout', (event) => {
       if (event.relatedTarget instanceof Node && carousel.contains(event.relatedTarget)) return;
