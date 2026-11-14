@@ -2,6 +2,7 @@ export interface Project {
   title: string;
   summary: string;
   tags: string[];
+  repositoryUrl?: string;
   showStackIcons?: boolean;
   details?: {
     overview: string;
@@ -15,6 +16,7 @@ export const projects: Project[] = [
     title: 'BoardMate',
     summary: 'A location-aware housing marketplace for students and boarding owners.',
     tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
+    repositoryUrl: '',
     previews: [
       { src: '/projects/boardmate/01-discover.svg', alt: 'BoardMate mock preview: discover nearby boarding options' },
       { src: '/projects/boardmate/02-map.svg', alt: 'BoardMate mock preview: browse listings on a map' },
@@ -52,6 +54,7 @@ export const projects: Project[] = [
     title: 'TripCraft',
     summary: 'AI-integrated Travel Planning & Itinerary Platform',
     tags: ['React', 'Python', 'Flutter', '.NET', 'PostgreSQL'],
+    repositoryUrl: 'https://github.com/Mithila-Minidul/Travel-Planning-Itinerary-Platform',
     showStackIcons: true,
     previews: [
       { src: '/projects/tripcraft/01-home.png', alt: 'Project tripcraft preview: Landing Page' },
@@ -108,7 +111,7 @@ export const projects: Project[] = [
             ],
           },
         },
-  {
+  /*{
     title: 'Project three',
     summary: 'Add a concise summary of the project and its impact.',
     tags: ['Your', 'Stack'],
@@ -165,5 +168,5 @@ export const projects: Project[] = [
         },
       ],
     },
-  },
+  }, */
 ];

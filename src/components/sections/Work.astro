@@ -25,7 +25,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                 <div class="project-copy">
                   <div class="project-kicker">
                     <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span>Selected build</span>
+                    <span>Selected project</span>
                   </div>
                   <h3>{project.title}</h3>
                   <p class="summary">{project.summary}</p>
@@ -37,18 +37,34 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                       </Tag>
                     ))}
                   </div>
-                  {project.details && (
-                    <button
-                      class="details-toggle"
-                      type="button"
-                      aria-expanded="false"
-                      aria-controls={`project-details-${index}`}
-                    >
-                      <span class="toggle-label">Explore project details</span>
-                      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="M4.5 10h10m-4-4 4 4-4 4" />
-                      </svg>
-                    </button>
+                  {(project.repositoryUrl || project.details) && (
+                    <div class="project-actions">
+                      {project.repositoryUrl && (
+                        <a
+                          class="repository-link"
+                          href={project.repositoryUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.title} repository on GitHub`}
+                        >
+                          <SkillIcon name="GitHub" />
+                          <span>View repository</span>
+                        </a>
+                      )}
+                      {project.details && (
+                        <button
+                          class="details-toggle"
+                          type="button"
+                          aria-expanded="false"
+                          aria-controls={`project-details-${index}`}
+                        >
+                          <span class="toggle-label">Explore project details</span>
+                          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M4.5 10h10m-4-4 4 4-4 4" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
                 <figure
@@ -410,6 +426,19 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     border-color: rgba(0, 113, 227, 0.18);
     background: rgba(255, 255, 255, 0.86);
   }
+  .project-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .repository-link {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    gap: 8px;
+    color: var(--blue);
+    font-size: 0.9rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+  .repository-link:hover { color: #005bb5; text-decoration: underline; text-underline-offset: 3px; }
+  .repository-link:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 4px; }
   .details-toggle {
     display: inline-flex;
     min-height: 40px;
