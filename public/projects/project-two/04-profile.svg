@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
-  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
-  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project two</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Your workspace</text>
-  <rect x="64" y="190" width="772" height="322" rx="20" fill="#fff"/><circle cx="163" cy="284" r="48" fill="#d9e7f5"/><circle cx="163" cy="269" r="17" fill="#90a9c5"/><path d="M125 321c4-26 20-38 38-38s34 12 38 38" fill="#90a9c5"/>
-  <text x="235" y="266" fill="#263e59" font-family="Arial,sans-serif" font-size="22" font-weight="700">Team workspace</text><text x="235" y="296" fill="#71849b" font-family="Arial,sans-serif" font-size="15">Manage your profile and preferences</text>
-  <rect x="104" y="365" width="326" height="54" rx="13" fill="#f2f6fa"/><text x="127" y="398" fill="#71849b" font-family="Arial,sans-serif" font-size="14">Display name</text><rect x="450" y="365" width="342" height="54" rx="13" fill="#f2f6fa"/><text x="473" y="398" fill="#71849b" font-family="Arial,sans-serif" font-size="14">Email address</text>
-  <rect x="104" y="440" width="688" height="42" rx="13" fill="#e6f2ee"/><text x="127" y="466" fill="#337769" font-family="Arial,sans-serif" font-size="14">Personal settings · Notifications · Security</text>
-  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
-</svg>

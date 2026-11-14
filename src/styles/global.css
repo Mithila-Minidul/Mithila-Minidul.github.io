@@ -3,6 +3,14 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+:root {
+  --portfolio-background:
+    radial-gradient(60vw 50vh at 85% 8%, var(--peach) 0%, transparent 70%),
+    radial-gradient(55vw 55vh at 10% 30%, var(--sky) 0%, transparent 70%),
+    radial-gradient(50vw 50vh at 70% 95%, var(--mint) 0%, transparent 70%),
+    var(--fog);
+}
+
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 
 body {
@@ -11,11 +19,7 @@ body {
   color: var(--ink);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  background:
-    radial-gradient(60vw 50vh at 85% 8%, var(--peach) 0%, transparent 70%),
-    radial-gradient(55vw 55vh at 10% 30%, var(--sky) 0%, transparent 70%),
-    radial-gradient(50vw 50vh at 70% 95%, var(--mint) 0%, transparent 70%),
-    var(--fog);
+  background: var(--portfolio-background);
   background-attachment: fixed;
 }
 

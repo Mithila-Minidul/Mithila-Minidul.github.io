@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620">
-  <rect width="900" height="620" fill="#eaf0f8"/><rect x="28" y="24" width="844" height="572" rx="28" fill="#f8fbff"/>
-  <text x="64" y="77" fill="#244263" font-family="Arial,sans-serif" font-size="24" font-weight="700">Project two</text><text x="64" y="105" fill="#71849b" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">MOCK UI · REPLACE WITH REAL SCREENSHOT</text><text x="64" y="161" fill="#1e334b" font-family="Arial,sans-serif" font-size="29" font-weight="700">Reports &amp; insights</text>
-  <rect x="64" y="188" width="468" height="322" rx="20" fill="#fff"/><text x="92" y="229" fill="#263e59" font-family="Arial,sans-serif" font-size="17" font-weight="700">Monthly activity</text>
-  <path d="M114 442h364M130 430V288M205 430V350M280 430V313M355 430V270M430 430V326" stroke="#9bb6d5" stroke-width="28" stroke-linecap="round"/><path d="M114 443h364" stroke="#dce5ef" stroke-width="2"/>
-  <rect x="554" y="188" width="282" height="149" rx="20" fill="#e6f2ee"/><text x="582" y="230" fill="#71849b" font-family="Arial,sans-serif" font-size="14">Tasks completed</text><text x="582" y="282" fill="#168b78" font-family="Arial,sans-serif" font-size="34" font-weight="700">+18.6%</text><text x="582" y="310" fill="#71849b" font-family="Arial,sans-serif" font-size="13">Compared to last month</text>
-  <rect x="554" y="357" width="282" height="153" rx="20" fill="#edf0fa"/><text x="582" y="400" fill="#71849b" font-family="Arial,sans-serif" font-size="14">Team focus time</text><text x="582" y="450" fill="#65558e" font-family="Arial,sans-serif" font-size="34" font-weight="700">86 hours</text><text x="582" y="481" fill="#71849b" font-family="Arial,sans-serif" font-size="13">Across all active projects</text>
-  <text x="64" y="558" fill="#8191a4" font-family="Arial,sans-serif" font-size="12">DEMO CONCEPT ONLY</text>
-</svg>

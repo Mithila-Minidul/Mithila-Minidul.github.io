@@ -52,10 +52,14 @@ export const projects: Project[] = [
     summary: 'Add a concise project summary, the problem it solves, and the result.',
     tags: ['Your', 'Stack'],
     previews: [
-      { src: '/projects/project-two/01-dashboard.svg', alt: 'Project two mock preview: dashboard' },
-      { src: '/projects/project-two/02-activity.svg', alt: 'Project two mock preview: activity view' },
-      { src: '/projects/project-two/03-reports.svg', alt: 'Project two mock preview: reports view' },
-      { src: '/projects/project-two/04-profile.svg', alt: 'Project two mock preview: profile view' },
+      { src: '/projects/tripcraft/01-home.png', alt: 'Project tripcraft mock preview: dashboard' },
+      { src: '/projects/tripcraft/02-register.png', alt: 'Project tripcraft mock preview: activity view' },
+      { src: '/projects/tripcraft/03-login.png', alt: 'Project tripcraft mock preview: reports view' },
+      { src: '/projects/tripcraft/04-admin1.png', alt: 'Project tripcraft mock preview: profile view' },
+      { src: '/projects/tripcraft/03-admin2.png', alt: 'Project tripcraft mock preview: profile view' },
+      { src: '/projects/tripcraft/04-admin2.png', alt: 'Project tripcraft mock preview: profile view' },
+      { src: '/projects/tripcraft/05-admin3.png', alt: 'Project tripcraft mock preview: profile view' },
+
     ],
     details: {
       overview:
