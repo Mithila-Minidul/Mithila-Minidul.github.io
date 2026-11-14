@@ -9,7 +9,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
 <section id="work" class="wrap section">
   <div class="section-heading">
     <div>
-      <h2>Selected work</h2>
+      <h2>Selected Work</h2>
     </div>
   </div>
   <div class="bento">
@@ -93,9 +93,9 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                             class="preview-slide"
                             role="group"
                             aria-roledescription="slide"
-                            aria-label={`${preview.alt} (${slideIndex + 1} of ${project.previews.length})`}
+                            aria-label={`${preview.alt} (${slideIndex + 1} of ${project.previews?.length ?? 0})`}
                             aria-hidden={slideIndex === 0 ? undefined : 'true'}
-                            style={`flex-basis: ${100 / (project.previews.length + 2)}%`}
+                            style={`flex-basis: ${100 / ((project.previews?.length ?? 0) + 2)}%`}
                           >
                             <img src={preview.src} alt="" />
                           </div>
@@ -395,6 +395,11 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     user-select: none;
   }
   .preview-dialog-image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+  .preview-dialog-image.is-entering { animation: preview-image-enter 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes preview-image-enter {
+    from { opacity: 0.35; transform: scale(0.985); }
+    to { opacity: 1; transform: scale(1); }
+  }
   .preview-dialog-nav { position: absolute; top: 50%; width: 48px; height: 48px; border-radius: 50%; transform: translateY(-50%); }
   .preview-dialog-nav svg { width: 22px; height: 22px; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
   .preview-dialog-previous { left: 18px; }
@@ -534,7 +539,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     .detail-panel,
     .detail-inner { transition: none; }
     .preview-track,
-    .preview-dialog-image { transition: none; }
+    .preview-dialog-image { transition: none; animation: none; }
   }
 </style>
 
@@ -603,6 +608,9 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     const item = dialogItems[dialogIndex];
     dialogImage.src = item.src;
     dialogImage.alt = item.alt;
+    dialogImage.classList.remove('is-entering');
+    void dialogImage.offsetWidth;
+    dialogImage.classList.add('is-entering');
     dialogCaption.textContent = item.alt;
     dialogCount.textContent = `${dialogIndex + 1} / ${dialogItems.length}`;
   };
@@ -693,7 +701,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
 
       autoplayTimer = window.setTimeout(() => {
         autoplayTimer = 0;
-        if (carousel.contains(document.activeElement) || activePointerId !== null) return;
+        if (carousel.matches(':focus-visible') || activePointerId !== null) return;
         setPosition(currentIndex + 1);
         scheduleAutoplay();
       }, autoplayDelay);
