@@ -4,6 +4,15 @@ import { CanvasTexture, SRGBColorSpace } from 'three';
 import { Environment, Lightformer } from '@react-three/drei';
 import GlassShapes from './GlassShapes';
 
+const isLowPowerDevice = () => {
+  const device = navigator as Navigator & { deviceMemory?: number };
+  return (
+    window.matchMedia('(max-width: 760px)').matches ||
+    (device.deviceMemory !== undefined && device.deviceMemory <= 4) ||
+    device.hardwareConcurrency <= 4
+  );
+};
+
 // paints the same pastel glows as the page background, so glass never samples "nothing"
 function Backdrop() {
   const scene = useThree((s) => s.scene);
@@ -51,14 +60,18 @@ function RenderStaticFrame({ enabled }: { enabled: boolean }) {
 export default function HeroScene() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
+  const [lowPower, setLowPower] = useState(() => typeof window !== 'undefined' && isLowPowerDevice());
   const [reduceMotion, setReduceMotion] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
 
   useEffect(() => {
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const viewportPreference = window.matchMedia('(max-width: 760px)');
     const updateMotionPreference = () => setReduceMotion(motionPreference.matches);
+    const updateDeviceProfile = () => setLowPower(isLowPowerDevice());
     motionPreference.addEventListener('change', updateMotionPreference);
+    viewportPreference.addEventListener('change', updateDeviceProfile);
 
     const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
     const element = ref.current;
@@ -66,6 +79,7 @@ export default function HeroScene() {
 
     return () => {
       motionPreference.removeEventListener('change', updateMotionPreference);
+      viewportPreference.removeEventListener('change', updateDeviceProfile);
       io.disconnect();
     };
   }, []);
@@ -74,18 +88,23 @@ export default function HeroScene() {
     <div ref={ref} style={{ position: 'absolute', inset: 0 }} aria-hidden="true">
       <Canvas
         flat
-        dpr={[1, 1.5]}
+        dpr={lowPower ? 1 : [1, 1.25]}
+        gl={{
+          alpha: false,
+          antialias: !lowPower,
+          powerPreference: lowPower ? 'low-power' : 'high-performance',
+        }}
         frameloop={visible ? (reduceMotion ? 'demand' : 'always') : 'never'}
         camera={{ position: [0, 0, 7], fov: 35 }}
       >
         <Backdrop />
         <RenderStaticFrame enabled={visible && reduceMotion} />
-        <Environment resolution={256}>
+        <Environment resolution={lowPower ? 128 : 192}>
           <Lightformer form="rect" intensity={3} position={[0, 5, -5]} scale={[10, 4, 1]} />
           <Lightformer form="ring" intensity={2} position={[-5, 1, 2]} scale={4} />
           <Lightformer form="rect" intensity={1.5} position={[5, -2, 3]} scale={[6, 6, 1]} color="#ffd9c9" />
         </Environment>
-        <GlassShapes reduceMotion={reduceMotion} />
+        <GlassShapes reduceMotion={reduceMotion} lowPower={lowPower} />
       </Canvas>
     </div>
   );

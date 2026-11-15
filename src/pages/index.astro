@@ -10,12 +10,12 @@ import Education from '../components/sections/Education.astro';
 import TechnicalSkills from '../components/sections/TechnicalSkills.astro';
 import Contributions from '../components/sections/Contributions.astro';
 import Contact from '../components/sections/Contact.astro';
-import HeroScene from '../components/scene/HeroScene.tsx';
+import HeroSceneLoader from '../components/scene/HeroSceneLoader';
 ---
 <BaseLayout>
   <Navbar />
   <Hero>
-    <HeroScene slot="scene" client:only="react" />
+    <HeroSceneLoader slot="scene" client:idle={{ timeout: 1000 }} />
   </Hero>
   <main>
     <About />

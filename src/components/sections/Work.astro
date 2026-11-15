@@ -5,6 +5,13 @@ import Tag from '../ui/Tag.astro';
 import { projects } from '../../data/projects';
 
 const projectRows = projects.map((project, index) => ({ project, index }));
+const previewThumbnail = (src: string) => {
+  const tripCraftPath = '/projects/tripcraft/';
+  if (!src.startsWith(tripCraftPath) || !src.endsWith('.png')) return src;
+
+  const filename = src.slice(tripCraftPath.length).replace(/\.png$/i, '.webp');
+  return `${tripCraftPath}thumbs/${filename}`;
+};
 ---
 <section id="work" class="wrap section">
   <div class="section-heading reveal-item">
@@ -86,7 +93,12 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                           aria-hidden="true"
                           style={`flex-basis: ${100 / (project.previews.length + 2)}%`}
                         >
-                          <img src={project.previews[project.previews.length - 1].src} alt="" />
+                          <img
+                            src={previewThumbnail(project.previews[project.previews.length - 1].src)}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
                         </div>
                         {project.previews.map((preview, slideIndex) => (
                           <div
@@ -97,11 +109,22 @@ const projectRows = projects.map((project, index) => ({ project, index }));
                             aria-hidden={slideIndex === 0 ? undefined : 'true'}
                             style={`flex-basis: ${100 / ((project.previews?.length ?? 0) + 2)}%`}
                           >
-                            <img src={preview.src} alt="" />
+                            <img
+                              src={previewThumbnail(preview.src)}
+                              data-full-src={preview.src}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
                           </div>
                         ))}
                         <div class="preview-slide" aria-hidden="true" style={`flex-basis: ${100 / (project.previews.length + 2)}%`}>
-                          <img src={project.previews[0].src} alt="" />
+                          <img
+                            src={previewThumbnail(project.previews[0].src)}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
                         </div>
                       </div>
                     </div>
@@ -753,6 +776,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
 
     let currentIndex = 1;
     let autoplayTimer = 0;
+    let carouselVisible = !('IntersectionObserver' in window);
     let activePointerId: number | null = null;
     let pointerStartX = 0;
     let pointerStartY = 0;
@@ -788,7 +812,7 @@ const projectRows = projects.map((project, index) => ({ project, index }));
 
     const scheduleAutoplay = () => {
       pauseAutoplay();
-      if (reducedMotion.matches || document.hidden) return;
+      if (reducedMotion.matches || document.hidden || !carouselVisible) return;
 
       autoplayTimer = window.setTimeout(() => {
         autoplayTimer = 0;
@@ -806,10 +830,13 @@ const projectRows = projects.map((project, index) => ({ project, index }));
     const openPreviewDialog = () => {
       if (!previewDialog || !dialogImage || !dialogTitle) return;
 
-      dialogItems = slides.slice(1, -1).map((slide) => ({
-        src: slide.querySelector('img')?.src ?? '',
-        alt: slide.getAttribute('aria-label')?.replace(/\s+\(\d+ of \d+\)$/, '') ?? '',
-      }));
+      dialogItems = slides.slice(1, -1).map((slide) => {
+        const image = slide.querySelector<HTMLImageElement>('img');
+        return {
+          src: image?.dataset.fullSrc ?? image?.src ?? '',
+          alt: slide.getAttribute('aria-label')?.replace(/\s+\(\d+ of \d+\)$/, '') ?? '',
+        };
+      });
       dialogItems = dialogItems.filter((item) => item.src);
       if (!dialogItems.length) return;
 
@@ -922,6 +949,15 @@ const projectRows = projects.map((project, index) => ({ project, index }));
       else scheduleAutoplay();
     });
     window.addEventListener('resize', () => setPosition(currentIndex, false));
+
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(([entry]) => {
+        carouselVisible = entry.isIntersecting;
+        if (carouselVisible) scheduleAutoplay();
+        else pauseAutoplay();
+      });
+      visibilityObserver.observe(carousel);
+    }
 
     scheduleAutoplay();
   }

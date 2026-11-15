@@ -271,6 +271,11 @@ import { siGithub } from 'simple-icons';
     transform: translateX(-150%) rotate(-22deg);
     animation: availability-shine 7.5s ease-in-out infinite;
   }
+  #contact:not(.is-active) .availability-shine,
+  #contact:not(.is-active) .contact-envelope-art,
+  #contact:not(.is-active) :global(.contact)::before {
+    animation-play-state: paused;
+  }
   .availability-label,
   .availability-dot {
     position: relative;
@@ -528,28 +533,51 @@ import { siGithub } from 'simple-icons';
   const contactCard = document.querySelector<HTMLElement>('#contact .contact');
   const contactActions = document.querySelector<HTMLElement>('#contact .contact-actions');
 
+  if (contactSection) {
+    if ('IntersectionObserver' in window) {
+      const visibilityObserver = new IntersectionObserver(([entry]) => {
+        contactSection.classList.toggle('is-active', entry.isIntersecting);
+        if (!entry.isIntersecting) contactCard?.removeAttribute('data-near');
+      }, { rootMargin: '80px 0px' });
+      visibilityObserver.observe(contactSection);
+    } else {
+      contactSection.classList.add('is-active');
+    }
+  }
+
   if (contactCard) {
     const proximity = 110;
+    const descriptions = Array.from(contactCard.querySelectorAll<HTMLElement>('.contact-description'));
+    let pointerFrame = 0;
+    let latestPointer: { x: number; y: number } | null = null;
 
-    window.addEventListener('pointermove', (event) => {
-      if (event.pointerType !== 'mouse') return;
+    const updatePointerEffects = () => {
+      pointerFrame = 0;
+      if (!latestPointer || !contactSection?.classList.contains('is-active')) return;
 
       const bounds = contactCard.getBoundingClientRect();
-      const distanceX = Math.max(bounds.left - event.clientX, 0, event.clientX - bounds.right);
-      const distanceY = Math.max(bounds.top - event.clientY, 0, event.clientY - bounds.bottom);
+      const distanceX = Math.max(bounds.left - latestPointer.x, 0, latestPointer.x - bounds.right);
+      const distanceY = Math.max(bounds.top - latestPointer.y, 0, latestPointer.y - bounds.bottom);
       const isNear = bounds.bottom > 0 && bounds.top < window.innerHeight
         && distanceX * distanceX + distanceY * distanceY <= proximity * proximity;
 
-      contactCard.dataset.near = String(isNear);
+      if (contactCard.dataset.near !== String(isNear)) {
+        contactCard.dataset.near = String(isNear);
+      }
       if (isNear) {
-        const descriptions = contactCard.querySelectorAll<HTMLElement>('.contact-description');
         for (const description of descriptions) {
           const descriptionBounds = description.getBoundingClientRect();
-          description.style.setProperty('--contact-copy-x', `${event.clientX - descriptionBounds.left}px`);
-          description.style.setProperty('--contact-copy-y', `${event.clientY - descriptionBounds.top}px`);
+          description.style.setProperty('--contact-copy-x', `${latestPointer.x - descriptionBounds.left}px`);
+          description.style.setProperty('--contact-copy-y', `${latestPointer.y - descriptionBounds.top}px`);
         }
       }
-    });
+    };
+
+    window.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || !contactSection?.classList.contains('is-active')) return;
+      latestPointer = { x: event.clientX, y: event.clientY };
+      if (!pointerFrame) pointerFrame = requestAnimationFrame(updatePointerEffects);
+    }, { passive: true });
 
     window.addEventListener('blur', () => {
       delete contactCard.dataset.near;
