@@ -26,14 +26,19 @@ export default function GlassShapes({ reduceMotion, lowPower }: GlassShapesProps
   const group = useRef<Group>(null!);
   const introStart = useRef<number | null>(null);
   const { viewport } = useThree();
-  const scale = Math.min(0.85, viewport.width / 9); // shrink on narrow screens
+  // narrow canvas (phones): larger, centred shapes; wide canvas (desktop): unchanged
+  const narrow = viewport.width < 6.5;
+  const scale = narrow ? Math.min(0.75, viewport.width / 6.8) : Math.min(0.85, viewport.width / 9);
+  const baseX = narrow ? -2.55 * scale : -0.4;
   const scaleRef = useRef(scale);
   scaleRef.current = scale;
+  const baseXRef = useRef(baseX);
+  baseXRef.current = baseX;
 
   useLayoutEffect(() => {
     introStart.current = null;
     if (reduceMotion) {
-      group.current.position.set(-0.4, 0, 0);
+      group.current.position.set(baseXRef.current, 0, 0);
       group.current.rotation.set(0, 0, 0);
       group.current.scale.setScalar(scaleRef.current);
       return;
@@ -53,7 +58,7 @@ export default function GlassShapes({ reduceMotion, lowPower }: GlassShapesProps
     const blend = Math.min(1, delta * 5);
 
     group.current.scale.setScalar(scale * (0.12 + eased * 0.88));
-    group.current.position.x = -0.4 + (1 - eased) * 0.6;
+    group.current.position.x = baseX + (1 - eased) * 0.6;
     group.current.position.y = -(1 - eased) * 0.45;
     group.current.rotation.z = -(1 - eased) * 0.12;
     group.current.rotation.y += (
@@ -65,7 +70,7 @@ export default function GlassShapes({ reduceMotion, lowPower }: GlassShapesProps
   });
 
   return (
-    <group ref={group} scale={scale} position={[-0.4, 0, 0]}>
+    <group ref={group} scale={scale} position={[baseX, 0, 0]}>
       {/* pastel spheres behind the glass, so refraction has something to bend */}
       <mesh position={[2.2, 0.6, -2]}>
         <sphereGeometry args={[1.2, lowPower ? 24 : 48, lowPower ? 24 : 48]} />
