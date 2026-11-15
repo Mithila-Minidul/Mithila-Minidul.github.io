@@ -172,8 +172,18 @@ import { education } from '../../data/education';
   @media (max-width: 600px) {
     .timeline { margin-left: 6px; padding-left: 26px; }
     .timeline-entry::before { left: -37px; width: 16px; height: 16px; }
-    .timeline-entry :global(.education-card) { gap: 16px; padding: 24px; }
-    .logo { width: 76px; border-radius: 16px; }
+    .timeline-entry :global(.education-card) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      column-gap: 16px;
+      row-gap: 0;
+      padding: 24px;
+    }
+    .content { display: contents; }
+    .period { grid-column: 1 / -1; justify-self: start; white-space: nowrap; }
+    .logo { grid-column: 2; grid-row: 2 / span 3; align-self: start; width: 76px; border-radius: 16px; }
+    ul { grid-column: 1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .period-shine { animation: none; }
