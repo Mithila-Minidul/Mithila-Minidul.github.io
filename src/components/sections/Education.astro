@@ -181,9 +181,11 @@ import { education } from '../../data/education';
       padding: 24px;
     }
     .content { display: contents; }
-    .period { grid-column: 1 / -1; justify-self: start; white-space: nowrap; }
-    .logo { grid-column: 2; grid-row: 2 / span 3; align-self: start; width: 76px; border-radius: 16px; }
-    ul { grid-column: 1 / -1; }
+    .period { grid-column: 1; grid-row: 1; align-self: center; justify-self: start; margin-bottom: 0; white-space: nowrap; }
+    .logo { grid-column: 2; grid-row: 1; align-self: center; width: 56px; border-radius: 14px; padding: 7px; }
+    h3, h4, .status { grid-column: 1 / -1; }
+    h3 { margin-top: 16px; font-size: 1.25rem; }
+    ul { grid-column: 1 / -1; margin-top: 16px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .period-shine { animation: none; }
