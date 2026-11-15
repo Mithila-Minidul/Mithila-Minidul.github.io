@@ -156,6 +156,30 @@ import { site } from '../../data/site';
     let pendingLink: HTMLAnchorElement | undefined;
     let settleTimer = 0;
 
+    const revealLink = (link: HTMLAnchorElement) => {
+      if (nav.scrollWidth <= nav.clientWidth) return;
+
+      const navBounds = nav.getBoundingClientRect();
+      const linkBounds = link.getBoundingClientRect();
+      const visibleLeft = navBounds.left + nav.clientLeft;
+      const visibleRight = visibleLeft + nav.clientWidth;
+      const edge = 8;
+      let nextScrollLeft = nav.scrollLeft;
+
+      if (linkBounds.left < visibleLeft + edge) {
+        nextScrollLeft += linkBounds.left - visibleLeft - edge;
+      } else if (linkBounds.right > visibleRight - edge) {
+        nextScrollLeft += linkBounds.right - visibleRight + edge;
+      }
+
+      if (Math.abs(nextScrollLeft - nav.scrollLeft) > 1) {
+        nav.scrollTo({
+          left: nextScrollLeft,
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        });
+      }
+    };
+
     const positionIndicator = (link?: HTMLAnchorElement) => {
       if (!link) {
         indicator.classList.remove('is-visible');
@@ -169,7 +193,9 @@ import { site } from '../../data/site';
     };
 
     const setActiveLink = (link?: HTMLAnchorElement, reposition = false) => {
-      if (link === activeLink && !reposition) return;
+      const changed = link !== activeLink;
+      if (link && (changed || reposition)) revealLink(link);
+      if (!changed && !reposition) return;
 
       activeLink = link;
       for (const candidate of links) {
