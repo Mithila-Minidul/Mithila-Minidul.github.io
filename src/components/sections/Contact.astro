@@ -380,6 +380,13 @@ const expertise = [
     align-items: center;
   }
   .section :global(.contact-actions .button-content) { gap: 9px; }
+    @media (min-width: 481px) {
+    .section :global(.contact-actions .button-content) {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+  }
   .section :global(.contact-icon) {
     display: block;
     width: 17px;
