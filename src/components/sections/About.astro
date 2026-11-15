@@ -3,8 +3,8 @@ import GlassCard from '../ui/GlassCard.astro';
 import { site } from '../../data/site';
 ---
 <section id="about" class="wrap section">
-  <h2>About</h2>
-  <GlassCard strong class="about-card">
+  <h2 class="reveal-item">About</h2>
+  <GlassCard strong class="about-card reveal-item">
     <div class="profile-frame">
       <img class="profile" src={site.profileImage} alt={`${site.name} profile photo`} loading="lazy" />
     </div>
@@ -19,6 +19,21 @@ import { site } from '../../data/site';
     position: relative;
     z-index: 1;
     padding-block: 32px 96px;
+  }
+  .section.reveal-ready .reveal-item {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translateY(24px);
+    transition:
+      opacity 820ms ease,
+      filter 820ms ease,
+      transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+  .section.reveal-ready :global(.about-card.reveal-item) { transition-delay: 140ms; }
+  .section.reveal-ready .reveal-item.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
   .section :global(.about-card) {
     display: grid;
@@ -104,6 +119,13 @@ import { site } from '../../data/site';
   }
   @media (prefers-reduced-motion: reduce) {
     .profile-frame::after { transition: none; }
+    .section.reveal-ready .reveal-item,
+    .section.reveal-ready .reveal-item.is-visible {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
   }
   @media (prefers-reduced-transparency: reduce) {
     .profile-frame {
@@ -116,6 +138,30 @@ import { site } from '../../data/site';
 </style>
 
 <script>
+  const aboutSection = document.querySelector<HTMLElement>('#about');
+  const aboutRevealItems = aboutSection?.querySelectorAll<HTMLElement>('.reveal-item');
+
+  if (
+    aboutSection &&
+    aboutRevealItems?.length &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    aboutSection.classList.add('reveal-ready');
+    aboutRevealItems.forEach((item) => observer.observe(item));
+  }
+
   const frame = document.querySelector<HTMLElement>('#about .profile-frame');
   const aboutParagraphs = document.querySelectorAll<HTMLElement>('#about .copy p');
 

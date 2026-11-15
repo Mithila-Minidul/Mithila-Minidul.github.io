@@ -3,10 +3,10 @@ import GlassCard from '../ui/GlassCard.astro';
 import { education } from '../../data/education';
 ---
 <section id="education" class="wrap section">
-  <h2>Education</h2>
+  <h2 class="reveal-item">Education</h2>
   <div class="timeline">
     {education.map((entry, index) => (
-      <article class="timeline-entry" style={`--reveal-order: ${index}`}>
+      <article class="timeline-entry reveal-item" style={`--reveal-order: ${index + 1}`}>
         <GlassCard as="div" strong class="education-card">
           <div class="content">
             <span class="period">
@@ -66,7 +66,7 @@ import { education } from '../../data/education';
     box-shadow: 0 0 18px rgba(0, 184, 212, 0.4);
     content: "";
   }
-  .reveal-ready .timeline-entry {
+  .reveal-ready .reveal-item {
     opacity: 0;
     filter: blur(4px);
     transform: translateY(22px);
@@ -74,9 +74,9 @@ import { education } from '../../data/education';
       opacity 900ms ease,
       filter 900ms ease,
       transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
-    transition-delay: calc(var(--reveal-order) * 140ms);
+    transition-delay: calc(var(--reveal-order, 0) * 140ms);
   }
-  .reveal-ready .timeline-entry.is-visible {
+  .reveal-ready .reveal-item.is-visible {
     opacity: 1;
     filter: blur(0);
     transform: translateY(0);
@@ -177,7 +177,8 @@ import { education } from '../../data/education';
   }
   @media (prefers-reduced-motion: reduce) {
     .period-shine { animation: none; }
-    .reveal-ready .timeline-entry {
+    .reveal-ready .reveal-item,
+    .reveal-ready .reveal-item.is-visible {
       opacity: 1;
       filter: none;
       transform: none;
@@ -189,7 +190,7 @@ import { education } from '../../data/education';
 
 <script>
   const section = document.querySelector<HTMLElement>('#education');
-  const entries = section?.querySelectorAll<HTMLElement>('.timeline-entry');
+  const entries = section?.querySelectorAll<HTMLElement>('.reveal-item');
 
   if (
     section &&

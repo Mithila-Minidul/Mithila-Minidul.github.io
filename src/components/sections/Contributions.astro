@@ -3,31 +3,48 @@ import GlassCard from '../ui/GlassCard.astro';
 import { site } from '../../data/site';
 ---
 <section id="contributions" class="wrap section">
-  <h2>GitHub Contributions</h2>
-  <GlassCard strong class="contributions-card">
-    <a
-      class="graph-link"
-      href={site.links.github}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="View GitHub profile and contribution activity"
-    >
-      <img
-        src="/github-contributions.svg"
-        alt="GitHub contribution calendar for Mithila-Minidul, generated from the live public GitHub profile during the latest site build"
-        loading="lazy"
-      />
-    </a>
-    <a class="profile-link" href={site.links.github} target="_blank" rel="noreferrer">
-      View contribution activity on GitHub
-      <span aria-hidden="true">↗</span>
-    </a>
-  </GlassCard>
+  <h2 class="reveal-item">GitHub Contributions</h2>
+  <div class="contributions-panel reveal-item">
+    <GlassCard strong class="contributions-card">
+      <a
+        class="graph-link"
+        href={site.links.github}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="View GitHub profile and contribution activity"
+      >
+        <img
+          src="/github-contributions.svg"
+          alt="GitHub contribution calendar for Mithila-Minidul, generated from the live public GitHub profile during the latest site build"
+          loading="lazy"
+        />
+      </a>
+      <a class="profile-link" href={site.links.github} target="_blank" rel="noreferrer">
+        View contribution activity on GitHub
+        <span aria-hidden="true">↗</span>
+      </a>
+    </GlassCard>
+  </div>
 </section>
 
 <style>
   .section { padding-block: 96px; }
   h2 { margin-bottom: 40px; }
+  .section.reveal-ready .reveal-item {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(24px) scale(0.99);
+    transition:
+      opacity 760ms ease,
+      filter 760ms ease,
+      transform 860ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+  .section.reveal-ready .contributions-panel { transition-delay: 140ms; }
+  .section.reveal-ready .reveal-item.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
   .section :global(.contributions-card) { padding: clamp(20px, 4vw, 36px); }
   .graph-link { display: block; overflow-x: auto; }
   img { display: block; width: 100%; min-width: 680px; height: auto; }
@@ -40,4 +57,39 @@ import { site } from '../../data/site';
     font-weight: 600;
   }
   .profile-link:hover { text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) {
+    .section.reveal-ready .reveal-item,
+    .section.reveal-ready .reveal-item.is-visible {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
+  }
 </style>
+
+<script>
+  const contributionsSection = document.querySelector<HTMLElement>('#contributions');
+  const contributionRevealItems = contributionsSection?.querySelectorAll<HTMLElement>('.reveal-item');
+
+  if (
+    contributionsSection &&
+    contributionRevealItems?.length &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    contributionsSection.classList.add('reveal-ready');
+    contributionRevealItems.forEach((item) => observer.observe(item));
+  }
+</script>

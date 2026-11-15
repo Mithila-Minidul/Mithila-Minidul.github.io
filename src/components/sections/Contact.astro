@@ -5,7 +5,7 @@ import { site } from '../../data/site';
 import { siGithub } from 'simple-icons';
 ---
 <section id="contact" class="wrap section">
-  <GlassCard strong class="contact">
+  <GlassCard strong class="contact reveal-item">
     <div class="contact-layout">
       <div class="contact-intro">
         <span class="availability">
@@ -124,6 +124,20 @@ import { siGithub } from 'simple-icons';
   }
 
   .section { padding-block: 96px; }
+  .section.reveal-ready :global(.contact.reveal-item) {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(28px) scale(0.99);
+    transition:
+      opacity 820ms ease,
+      filter 820ms ease,
+      transform 900ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+  .section.reveal-ready :global(.contact.reveal-item.is-visible) {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
   .section :global(.contact) {
     isolation: isolate;
     padding: clamp(36px, 5vw, 64px);
@@ -439,6 +453,13 @@ import { siGithub } from 'simple-icons';
 
   @media (prefers-reduced-motion: reduce) {
     .availability-shine { animation: none; }
+    .section.reveal-ready :global(.contact.reveal-item),
+    .section.reveal-ready :global(.contact.reveal-item.is-visible) {
+      opacity: 1;
+      filter: none;
+      transform: none;
+      transition: none;
+    }
     .section :global(.contact),
     .section :global(.contact)::before,
     .section :global(.contact-actions .contact-email),
@@ -482,6 +503,28 @@ import { siGithub } from 'simple-icons';
 </style>
 
 <script>
+  const contactSection = document.querySelector<HTMLElement>('#contact');
+  const contactReveal = contactSection?.querySelector<HTMLElement>('.contact.reveal-item');
+
+  if (
+    contactSection &&
+    contactReveal &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        contactReveal.classList.add('is-visible');
+        observer.disconnect();
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    );
+
+    contactSection.classList.add('reveal-ready');
+    observer.observe(contactReveal);
+  }
+
   const contactCard = document.querySelector<HTMLElement>('#contact .contact');
   const contactActions = document.querySelector<HTMLElement>('#contact .contact-actions');
 
