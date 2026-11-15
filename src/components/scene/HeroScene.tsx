@@ -38,38 +38,55 @@ function Backdrop() {
   return null;
 }
 
+function RenderStaticFrame({ enabled }: { enabled: boolean }) {
+  const invalidate = useThree((state) => state.invalidate);
+
+  useEffect(() => {
+    if (enabled) invalidate();
+  }, [enabled, invalidate]);
+
+  return null;
+}
+
 export default function HeroScene() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
-  const [reduceMotion, setReduceMotion] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
 
   useEffect(() => {
-    setReduceMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-    // stop rendering when the hero is scrolled out of view
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const updateMotionPreference = () => setReduceMotion(motionPreference.matches);
+    motionPreference.addEventListener('change', updateMotionPreference);
+
     const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    io.observe(ref.current!);
-    return () => io.disconnect();
+    const element = ref.current;
+    if (element) io.observe(element);
+
+    return () => {
+      motionPreference.removeEventListener('change', updateMotionPreference);
+      io.disconnect();
+    };
   }, []);
 
   return (
     <div ref={ref} style={{ position: 'absolute', inset: 0 }} aria-hidden="true">
-      {!reduceMotion && (
-        <Canvas
-          flat
-          dpr={[1, 1.5]}
-          frameloop={visible ? 'always' : 'never'}
-          camera={{ position: [0, 0, 7], fov: 35 }}
-        >
-          <Backdrop />
-          {/* built-in studio lights, no files downloaded */}
-          <Environment resolution={256}>
-            <Lightformer form="rect" intensity={3} position={[0, 5, -5]} scale={[10, 4, 1]} />
-            <Lightformer form="ring" intensity={2} position={[-5, 1, 2]} scale={4} />
-            <Lightformer form="rect" intensity={1.5} position={[5, -2, 3]} scale={[6, 6, 1]} color="#ffd9c9" />
-          </Environment>
-          <GlassShapes />
-        </Canvas>
-      )}
+      <Canvas
+        flat
+        dpr={[1, 1.5]}
+        frameloop={visible ? (reduceMotion ? 'demand' : 'always') : 'never'}
+        camera={{ position: [0, 0, 7], fov: 35 }}
+      >
+        <Backdrop />
+        <RenderStaticFrame enabled={visible && reduceMotion} />
+        <Environment resolution={256}>
+          <Lightformer form="rect" intensity={3} position={[0, 5, -5]} scale={[10, 4, 1]} />
+          <Lightformer form="ring" intensity={2} position={[-5, 1, 2]} scale={4} />
+          <Lightformer form="rect" intensity={1.5} position={[5, -2, 3]} scale={[6, 6, 1]} color="#ffd9c9" />
+        </Environment>
+        <GlassShapes reduceMotion={reduceMotion} />
+      </Canvas>
     </div>
   );
 }

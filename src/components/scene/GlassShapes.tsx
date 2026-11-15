@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Float, MeshTransmissionMaterial } from '@react-three/drei';
 import type { Group } from 'three';
@@ -17,15 +17,50 @@ const Glass = () => (
   />
 );
 
-export default function GlassShapes() {
+interface GlassShapesProps {
+  reduceMotion: boolean;
+}
+
+export default function GlassShapes({ reduceMotion }: GlassShapesProps) {
   const group = useRef<Group>(null!);
+  const introStart = useRef<number | null>(null);
   const { viewport } = useThree();
   const scale = Math.min(0.85, viewport.width / 9); // shrink on narrow screens
+  const scaleRef = useRef(scale);
+  scaleRef.current = scale;
 
-  // ease the whole group toward the pointer
-  useFrame(({ pointer }) => {
-    group.current.rotation.y += (pointer.x * 0.25 - group.current.rotation.y) * 0.05;
-    group.current.rotation.x += (-pointer.y * 0.15 - group.current.rotation.x) * 0.05;
+  useLayoutEffect(() => {
+    introStart.current = null;
+    if (reduceMotion) {
+      group.current.position.set(-0.4, 0, 0);
+      group.current.rotation.set(0, 0, 0);
+      group.current.scale.setScalar(scaleRef.current);
+      return;
+    }
+
+    group.current.position.set(0.2, -0.45, 0);
+    group.current.rotation.set(0.3, -0.7, -0.12);
+    group.current.scale.setScalar(scaleRef.current * 0.12);
+  }, [reduceMotion]);
+
+  useFrame(({ pointer, clock }, delta) => {
+    if (reduceMotion) return;
+
+    introStart.current ??= clock.elapsedTime;
+    const progress = Math.min(1, (clock.elapsedTime - introStart.current) / 1.9);
+    const eased = 1 - Math.pow(1 - progress, 4);
+    const blend = Math.min(1, delta * 5);
+
+    group.current.scale.setScalar(scale * (0.12 + eased * 0.88));
+    group.current.position.x = -0.4 + (1 - eased) * 0.6;
+    group.current.position.y = -(1 - eased) * 0.45;
+    group.current.rotation.z = -(1 - eased) * 0.12;
+    group.current.rotation.y += (
+      -(1 - eased) * 0.7 + pointer.x * 0.25 * eased - group.current.rotation.y
+    ) * blend;
+    group.current.rotation.x += (
+      (1 - eased) * 0.3 - pointer.y * 0.15 * eased - group.current.rotation.x
+    ) * blend;
   });
 
   return (
@@ -45,24 +80,43 @@ export default function GlassShapes() {
       </mesh>
 
       {/* the glass shapes */}
-      <Float speed={1.2} rotationIntensity={0.6} floatIntensity={0.8}>
-        <mesh position={[2.3, 0, 0]}>
-          <torusGeometry args={[1, 0.42, 64, 128]} />
-          <Glass />
-        </mesh>
-      </Float>
-      <Float speed={1.6} floatIntensity={1}>
-        <mesh position={[3.8, 1.4, 0.4]}>
-          <sphereGeometry args={[0.7, 64, 64]} />
-          <Glass />
-        </mesh>
-      </Float>
-      <Float speed={1} rotationIntensity={1}>
-        <mesh position={[1.3, -1.8, 0.6]}>
-          <icosahedronGeometry args={[0.6, 3]} />
-          <Glass />
-        </mesh>
-      </Float>
+      {reduceMotion ? (
+        <>
+          <mesh position={[2.3, 0, 0]}>
+            <torusGeometry args={[1, 0.42, 64, 128]} />
+            <Glass />
+          </mesh>
+          <mesh position={[3.8, 1.4, 0.4]}>
+            <sphereGeometry args={[0.7, 64, 64]} />
+            <Glass />
+          </mesh>
+          <mesh position={[1.3, -1.8, 0.6]}>
+            <icosahedronGeometry args={[0.6, 3]} />
+            <Glass />
+          </mesh>
+        </>
+      ) : (
+        <>
+          <Float speed={1.2} rotationIntensity={0.6} floatIntensity={0.8}>
+            <mesh position={[2.3, 0, 0]}>
+              <torusGeometry args={[1, 0.42, 64, 128]} />
+              <Glass />
+            </mesh>
+          </Float>
+          <Float speed={1.6} floatIntensity={1}>
+            <mesh position={[3.8, 1.4, 0.4]}>
+              <sphereGeometry args={[0.7, 64, 64]} />
+              <Glass />
+            </mesh>
+          </Float>
+          <Float speed={1} rotationIntensity={1}>
+            <mesh position={[1.3, -1.8, 0.6]}>
+              <icosahedronGeometry args={[0.6, 3]} />
+              <Glass />
+            </mesh>
+          </Float>
+        </>
+      )}
     </group>
   );
 }
