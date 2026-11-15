@@ -603,7 +603,13 @@ const expertise = [
       margin: 16px 0 10px;
       font-size: clamp(2.2rem, 4vw, 3.2rem);
     }
-    .contact-envelope { width: min(100%, 180px); margin-top: 8px; }
+    .contact-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .contact-envelope { width: min(100%, 180px); margin: 8px auto 0; }
 
     .contact-description {
       margin-bottom: 10px;
