@@ -426,15 +426,21 @@ const previewThumbnail = (src: string) => {
     display: grid;
     flex: 0 0 auto;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.76);
-    background: rgba(10, 18, 30, 0.84);
-    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.96), rgba(232, 241, 255, 0.82)),
+      rgba(255, 255, 255, 0.86);
+    color: #1d1d1f;
     cursor: pointer;
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(18px) saturate(180%);
+    box-shadow:
+      0 0 0 1px rgba(29, 29, 31, 0.14),
+      0 8px 22px rgba(40, 55, 90, 0.28),
+      inset 0 1px 0 #fff;
+    transition: transform 250ms var(--spring), background 160ms ease;
   }
-  .preview-dialog-close { width: 42px; height: 42px; border-radius: 50%; }
+  .preview-dialog-close { width: 44px; height: 44px; border-radius: 50%; }
   .preview-dialog-close svg { width: 20px; height: 20px; stroke: currentColor; stroke-linecap: round; stroke-width: 1.8; }
   .preview-dialog-media {
     position: relative;
@@ -456,9 +462,15 @@ const previewThumbnail = (src: string) => {
   .preview-dialog-previous { left: 18px; }
   .preview-dialog-next { right: 18px; }
   .preview-dialog-close:hover,
-  .preview-dialog-nav:hover { background: rgba(0, 0, 0, 0.96); }
+  .preview-dialog-nav:hover { background: #fff; }
+  .preview-dialog-close:hover { transform: scale(1.08); }
+  .preview-dialog-nav:hover { transform: translateY(-50%) scale(1.08); }
+  .preview-dialog-close:active { transform: scale(0.95); }
+  .preview-dialog-nav:active { transform: translateY(-50%) scale(0.95); }
   .preview-dialog-close:focus-visible,
-  .preview-dialog-nav:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .preview-dialog-nav:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  .preview-dialog .preview-dialog-close svg,
+  .preview-dialog .preview-dialog-nav svg { stroke-width: 2.2; }
   .preview-dialog-footer { color: var(--slate); font-size: 0.82rem; }
   .preview-dialog-count { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
   .tags { display: flex; flex-wrap: wrap; gap: 9px; margin: auto 0 18px; }
@@ -577,12 +589,14 @@ const previewThumbnail = (src: string) => {
     .preview-dialog { width: 96vw; height: min(88dvh, 720px); border-radius: 18px; }
     .preview-dialog-header,
     .preview-dialog-footer { padding: 14px; }
-    .preview-dialog-nav { width: 40px; height: 40px; }
+    .preview-dialog-nav { width: 44px; height: 44px; }
     .preview-dialog-previous { left: 10px; }
     .preview-dialog-next { right: 10px; }
   }
   @media (prefers-reduced-transparency: reduce) {
     .detail-inner { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+    .preview-dialog-close,
+    .preview-dialog-nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     .bento :global(.card)::before,
