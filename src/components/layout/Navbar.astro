@@ -2,12 +2,14 @@
 import { site } from '../../data/site';
 ---
 <nav class="glass navbar" aria-label="Primary">
-  <span class="active-surface" aria-hidden="true"></span>
-  {site.nav.map((item) => (
-    <a class="nav-link" href={item.href} data-nav-link>
-      {item.label}
-    </a>
-  ))}
+  <div class="nav-scroll">
+    <span class="active-surface" aria-hidden="true"></span>
+    {site.nav.map((item) => (
+      <a class="nav-link" href={item.href} data-nav-link>
+        {item.label}
+      </a>
+    ))}
+  </div>
 </nav>
 
 <style>
@@ -19,9 +21,7 @@ import { site } from '../../data/site';
     display: flex;
     width: max-content;
     max-width: calc(100vw - 24px);
-    gap: 2px;
-    overflow: auto hidden;
-    padding: 6px;
+    overflow: hidden;
     transform: translateX(-50%);
     border: 1px solid rgba(255, 255, 255, 0.78);
     border-radius: var(--r-pill);
@@ -35,10 +35,20 @@ import { site } from '../../data/site';
       inset 0 -1px 0 rgba(255, 255, 255, 0.28);
     -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(1.04);
     backdrop-filter: blur(28px) saturate(190%) contrast(1.04);
-    scrollbar-width: none;
     isolation: isolate;
   }
-  .navbar::-webkit-scrollbar { display: none; }
+  .nav-scroll {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-width: 0;
+    gap: 2px;
+    padding: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none; }
   .navbar::before {
     z-index: -1;
     opacity: 0.85;
@@ -120,7 +130,8 @@ import { site } from '../../data/site';
   }
 
   @media (max-width: 520px) {
-    .navbar { top: 12px; gap: 0; padding: 5px; }
+    .navbar { top: 12px; }
+    .nav-scroll { gap: 0; padding: 5px; }
     .nav-link { min-height: 38px; padding-inline: 12px; font-size: 0.82rem; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -145,26 +156,27 @@ import { site } from '../../data/site';
 
 <script>
   const nav = document.querySelector<HTMLElement>('.navbar');
-  const indicator = nav?.querySelector<HTMLElement>('.active-surface');
-  const links = [...(nav?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]') ?? [])];
+  const scroller = nav?.querySelector<HTMLElement>('.nav-scroll');
+  const indicator = scroller?.querySelector<HTMLElement>('.active-surface');
+  const links = [...(scroller?.querySelectorAll<HTMLAnchorElement>('[data-nav-link]') ?? [])];
   const destinations = links
     .map((link) => ({ link, section: document.querySelector<HTMLElement>(link.hash) }))
     .filter((item): item is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(item.section));
 
-  if (nav && indicator && links.length) {
+  if (nav && scroller && indicator && links.length) {
     let activeLink: HTMLAnchorElement | undefined;
     let pendingLink: HTMLAnchorElement | undefined;
     let settleTimer = 0;
 
     const revealLink = (link: HTMLAnchorElement) => {
-      if (nav.scrollWidth <= nav.clientWidth) return;
+      if (scroller.scrollWidth <= scroller.clientWidth) return;
 
-      const navBounds = nav.getBoundingClientRect();
+      const navBounds = scroller.getBoundingClientRect();
       const linkBounds = link.getBoundingClientRect();
-      const visibleLeft = navBounds.left + nav.clientLeft;
-      const visibleRight = visibleLeft + nav.clientWidth;
+      const visibleLeft = navBounds.left + scroller.clientLeft;
+      const visibleRight = visibleLeft + scroller.clientWidth;
       const edge = 8;
-      let nextScrollLeft = nav.scrollLeft;
+      let nextScrollLeft = scroller.scrollLeft;
 
       if (linkBounds.left < visibleLeft + edge) {
         nextScrollLeft += linkBounds.left - visibleLeft - edge;
@@ -172,8 +184,8 @@ import { site } from '../../data/site';
         nextScrollLeft += linkBounds.right - visibleRight + edge;
       }
 
-      if (Math.abs(nextScrollLeft - nav.scrollLeft) > 1) {
-        nav.scrollTo({
+      if (Math.abs(nextScrollLeft - scroller.scrollLeft) > 1) {
+        scroller.scrollTo({
           left: nextScrollLeft,
           behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
         });
