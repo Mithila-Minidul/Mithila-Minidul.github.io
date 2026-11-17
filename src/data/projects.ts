@@ -15,8 +15,9 @@ export const projects: Project[] = [
   {
     title: 'BoardMate',
     summary: 'A location-aware housing marketplace for students and boarding owners.',
-    tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io'],
+    tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Firebase'],
     repositoryUrl: '',
+    showStackIcons: true,
     previews: [
       { src: '/projects/boardmate/admin-ss/01-AdminLogin.png', alt: 'Project BoardMate preview: admin login' },
       { src: '/projects/boardmate/admin-ss/02-AdminDashboard.png', alt: 'Project BoardMate preview: admin dashboard' },
