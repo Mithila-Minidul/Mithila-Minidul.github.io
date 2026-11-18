@@ -14,7 +14,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: 'BoardMate',
-    summary: 'A location-aware housing marketplace for students and boarding owners.',
+    summary: 'A location-aware housing marketplace connecting boarding seekers with property owners.',
     tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Firebase'],
     repositoryUrl: '',
     showStackIcons: true,
@@ -46,28 +46,24 @@ export const projects: Project[] = [
     ],
     details: {
       overview:
-        'BoardMate connects people looking for housing with boarding owners publishing localized properties. Students can discover places close to where they need to be.',
+        'BoardMate is a location-aware housing marketplace that connects Finders looking for boardings with Owners who publish properties. Users can discover nearby boardings within 5 km (default), browse by multiple categories, request a preferred visit date and time (which notifies the owner), and chat in real time with push notifications. The app includes dual registration flows, NIC verification for owners, SMS OTP for mobile number validation, email password reset, account management features, Dark/Light theme, and an optional university proximity search as an additional convenience feature.',
       highlights: [
-        {
-          title: 'Property lifecycle',
-          text: 'An Express and Node.js backend with a modular Expo client manages listings, occupancy, target tenants, and pricing.',
-        },
-        {
-          title: 'Location-based search',
-          text: 'Geospatial search and proximity discovery help students find boarding houses near their preferred locations.',
-        },
-        {
-          title: 'Real-time chat',
-          text: 'Socket.io powers direct conversations between students and owners inside the app.',
-        },
-        {
-          title: 'Verified accounts',
-          text: 'SMS OTP verification through the Text.lk gateway helps confirm real users.',
-        },
-        {
-          title: 'Image handling',
-          text: 'Cloudinary processes and stores property photos for fast delivery.',
-        },
+      {
+        title: 'Dual Registration & Verification',
+        text: 'Separate registration for Finders and Owners, with NIC verification required for owners and SMS OTP for mobile number validation and change.',
+      },
+      {
+        title: 'Location-Based Discovery',
+        text: 'Find boardings within 5 km (default), explore multiple property categories, and view listings on an interactive map. Optional university proximity search (auto-detect or manual select) is available as an extra feature specially for University Students.',
+      },
+      {
+        title: 'Visit Requests & Real-time Chat',
+        text: 'Finders can request a suitable visit date and time. Owners receive notifications and both parties can communicate through in-app chat powered by Socket.io with push notifications.',
+      },
+      {
+        title: 'Secure Account Management',
+        text: 'Email-based password reset, change password, account deletion, custom alerts, and responsive UI with Dark/Light theme support etc.',
+      },
       ],
     },
   },
