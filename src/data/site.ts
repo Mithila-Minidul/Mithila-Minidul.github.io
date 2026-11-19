@@ -15,7 +15,7 @@ export const site = {
   email: 'minidulwijesinghe@gmail.com',
   links: {
     github: 'https://github.com/Mithila-Minidul',
-    linkedin: 'https://linkedin.com/in/YOUR_HANDLE',
+    linkedin: 'https://linkedin.com/in/mithila-minidul',
   },
   nav: [
     { label: 'About', href: '/#about' },
