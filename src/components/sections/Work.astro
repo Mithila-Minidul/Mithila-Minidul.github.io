@@ -31,9 +31,20 @@ const previewThumbnail = (src: string) => {
               <div class="project-layout">
                 <div class="project-copy">
                   <div class="project-kicker">
-                    <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span>Selected project</span>
-                  </div>
+  <div class="kicker-left">
+    <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
+    <span>Selected project</span>
+  </div>
+  {project.isPrivateRepo && (
+    <span class="private-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+      </svg>
+      Private Repo
+    </span>
+  )}
+</div>
                   <h3>{project.title}</h3>
                   <p class="summary">{project.summary}</p>
                   <div class="tags">
@@ -44,6 +55,25 @@ const previewThumbnail = (src: string) => {
                       </Tag>
                     ))}
                   </div>
+                  {project.teamMembers && project.teamMembers.length > 0 && (
+  <div class="team-members">
+    <span class="team-label">Team:</span>
+    <div class="avatar-group">
+      {project.teamMembers.map((member) => (
+        <a 
+          href={member.github} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="member-avatar" 
+          title={member.name}
+          aria-label={`${member.name}'s GitHub Profile`}
+        >
+          <img src={member.avatarUrl} alt="" width="30" height="30" loading="lazy" />
+        </a>
+      ))}
+    </div>
+  </div>
+)}
                   {(project.repositoryUrl || project.details) && (
                     <div class="project-actions">
                       {project.repositoryUrl && (
@@ -263,16 +293,95 @@ const previewThumbnail = (src: string) => {
   }
   .project-copy { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; }
   .project-kicker {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 20px;
-    color: var(--slate);
-    font-size: 0.72rem;
-    font-weight: 650;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  color: var(--slate);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+/* NEW: Kicker left group */
+.kicker-left {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* NEW: Private repo badge */
+.private-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(82, 101, 130, 0.15);
+  color: #435b7a;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.private-badge svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* NEW: Team member avatars */
+.team-members {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0; 
+  margin-bottom: 20px; /* Gives nice space before the "Explore details" button */
+}
+
+.team-label {
+  color: var(--slate);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.avatar-group {
+  display: flex;
+  align-items: center;
+}
+
+.member-avatar {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  overflow: hidden;
+  margin-left: -10px; /* Overlaps avatars for a stacked look */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 200ms ease;
+  z-index: 1;
+}
+
+.member-avatar:first-child {
+  margin-left: 0;
+}
+
+.member-avatar:hover {
+  transform: translateY(-2px) scale(1.08);
+  z-index: 10;
+}
+
+.member-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
   .project-number {
     display: grid;
     width: 28px;

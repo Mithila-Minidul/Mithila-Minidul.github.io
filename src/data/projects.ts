@@ -3,6 +3,8 @@ export interface Project {
   summary: string;
   tags: string[];
   repositoryUrl?: string;
+  isPrivateRepo?: boolean;
+  teamMembers?: { name: string; github: string; avatarUrl: string }[];
   showStackIcons?: boolean;
   details?: {
     overview: string;
@@ -17,6 +19,19 @@ export const projects: Project[] = [
     summary: 'A location-aware housing marketplace connecting boarding seekers with property owners.',
     tags: ['React Native', 'Expo', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Firebase'],
     repositoryUrl: '',
+    isPrivateRepo: true,
+    teamMembers: [ // NEW: Team member avatars
+      { 
+        name: 'Mithila Minidul', 
+        github: 'https://github.com/Mithila-Minidul', 
+        avatarUrl: 'https://github.com/Mithila-Minidul.png' 
+      },
+      { 
+        name: 'Binuk32', 
+        github: 'https://github.com/Binuk32', 
+        avatarUrl: 'https://github.com/Binuk32.png' 
+      }
+    ],
     showStackIcons: true,
     previews: [
       { src: '/projects/boardmate/admin-ss/01-AdminLogin.png', alt: 'Project BoardMate preview: admin login' },
@@ -72,6 +87,28 @@ export const projects: Project[] = [
     summary: 'AI-integrated Travel Planning & Itinerary Platform',
     tags: ['React', 'Python', 'Flutter', '.NET', 'PostgreSQL'],
     repositoryUrl: 'https://github.com/Mithila-Minidul/Travel-Planning-Itinerary-Platform',
+    teamMembers: [ // NEW: Team member avatars
+      { 
+        name: 'Mithila Minidul', 
+        github: 'https://github.com/Mithila-Minidul', 
+        avatarUrl: 'https://github.com/Mithila-Minidul.png' 
+      },
+      { 
+        name: 'Weeravaradhana', 
+        github: 'https://github.com/Weeravaradhana', 
+        avatarUrl: 'https://github.com/Weeravaradhana.png' 
+      },
+      { 
+        name: 'TharukaDarshana', 
+        github: 'https://github.com/TharukaDarshana', 
+        avatarUrl: 'https://github.com/TharukaDarshana.png' 
+      },
+      { 
+        name: 'Dilum', 
+        github: 'https://github.com/it24100115', 
+        avatarUrl: 'https://github.com/it24100115.png' 
+      }
+    ],
     showStackIcons: true,
     previews: [
       { src: '/projects/tripcraft/01-home.png', alt: 'Project tripcraft preview: Landing Page' },
